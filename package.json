@@ -1,0 +1,40 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node app.js --delay 2",
+    "data:start" : "babel-node dataCrawler.js"
+  }, 
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "7.9.0",
+    "@babel/node": "7.8.7",
+    "@babel/preset-env": "7.9.0",
+    "axios": "0.19.2",
+    "bcrypt": "4.0.1",
+    "body-parser": "1.19.0",
+    "cookie-parser": "1.4.5",
+    "csv-parse": "4.8.8",
+    "csv-stringify": "5.3.6",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "express-mysql-session": "2.1.4",
+    "express-session": "1.17.0",
+    "helmet": "3.21.3",
+    "morgan": "1.10.0",
+    "mysql": "2.18.1",
+    "mysql2": "2.1.0",
+    "passport": "0.4.1",
+    "passport-local": "1.0.0",
+    "pug": "2.0.4",
+    "puppeteer": "2.1.1",
+    "sequelize": "4.44.4",
+    "xlsx": "0.15.6"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.2"
+  }
+}

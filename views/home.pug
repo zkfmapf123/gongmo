@@ -1,0 +1,20 @@
+extends layouts/main
+include layouts/mixin/postSimpleShow
+
+block content
+    .home_container
+        .home_column
+            h3 최근 조회수 높은 자료
+            .posts
+                each item in posts
+                    +postSimpleShow({
+                        id: item.id,
+                        imageUrl: item.imageUrl,
+                        title: item.title,
+                        divide: item.divide,
+                        separate: item.separate,
+                        target : item.target,
+                        view : item.view
+                    })
+        .home_column
+            h3 최신 자료

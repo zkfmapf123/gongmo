@@ -1,0 +1,14 @@
+extends layouts/main
+
+block content
+    .form_container
+        .form_column
+            span= errorMessage
+            h1 필수항목
+            form(action=routers.join, method="post")
+                input#joinId(type="email" name="email" placeholder="아이디" required=true)
+                input#joinPw(type="password" name="password" placeholder="비밀번호" required=true)
+                input#joinPwCheck(type="password" name="passwordCheck" placeholder="비밀번호 확인" required=true)
+                input#joinName(type="text" name="name" placeholder="닉네임" required=true) 
+                input(type="submit" value="회원가입")
+            h2 필수항목아닌거 위에 추가하자...    

@@ -1,0 +1,32 @@
+extends layouts/main
+
+block content
+    .postDeatil_container
+        .postDetail_column
+            image(src=`${posts.imageUrl}` width=200 height= 500)
+            h3.postTitle= `제목 : ${posts.title}`
+            if posts.divide === 1
+                h3.postDivide= `분류 : 공모전`
+            else if posts.divide === 2
+                h3.postDivide= `분류 : 장학금`
+            else
+                h3.postDivide= `분류 : 대회활동`
+            h3.postTarget= `응모대상 : ${posts.target}`
+            h3.postAgency= `주최기관 : ${posts.agency}`
+            h3.postPeriod= `기간 : ${posts.period}`
+            h3.postAmount= `총 상금 : ${posts.amount}`
+            a(href=`${posts.link}`)
+                h3.postLink= `홈페이지 주소 : ${posts.link}`
+            h3.postText= ` 내용 : ${posts.text}`
+            h3.postCreateAt= `업데이트 날짜 : ${posts.createdAt}`
+            h3.postView= view
+
+        .postDetail_column
+            form.commentForm
+                if user
+                    button(type="submit") 글 쓰기
+                    button(type="submit") 글 수정하기
+                    button(type="submit") 글 삭제하기
+                else
+                    span=`글쓰기 권한이 없습니다.`
+                        

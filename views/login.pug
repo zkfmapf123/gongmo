@@ -1,0 +1,16 @@
+extends layouts/main
+
+block content
+    .form_container
+        .form_column
+            form(action=routers.login method="post")
+                input(type="email" name="username" placeholder="아이디" requied= true)
+                input(type="password" name="password" placeholder="비밀번호" requied=true)
+                input(type="submit" value="로그인")
+        .form_column
+            div
+                a(href="") 카카오톡 로그인
+            div
+                a(href="") 구글 로그인
+
+        .form_column

@@ -1,0 +1,35 @@
+extends layouts/main
+
+block content
+    .user_container
+        .user_column
+            div
+                label 이메일
+                span#email
+            div
+                label 닉네임
+                span#nickName
+            div
+                label 출신대학교
+                span#univ
+            div
+                label 학년
+                span#grade
+            div
+                label 평균학점
+                span#score
+            div
+                label 거주지역
+                span#livesCity
+            div
+                label 자기소개
+                span#comment
+                
+
+        .user_column
+            form#userDetail
+                button(type="submit") 유저 조회
+            form(action=`/user/${user.email}/modify` method="get")
+                input(type="submit" value="유저 수정")
+            form(action=`/user/${user.email}/delete` method="get")
+                input(type="submit" value="유저 삭제")

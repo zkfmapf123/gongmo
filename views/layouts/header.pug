@@ -1,0 +1,38 @@
+.header
+    .header_container
+        .header_column
+            a.homeIcon(href=routers.home)
+                i.fas.fa-home
+        .header_column
+            h1 소프트웨어시스템개발(과제)
+        .header_columm.sideBar
+            ul
+                if !user
+                    li
+                        a.login(href=routers.login) 로그인
+                    li
+                        a.join(href=routers.join) 회원가입
+                    li
+                        a.analHand(href=routers.analHand) 자가맞춤 공모전/장학금 보기
+                else
+                    span= `${user.nickName}님 어서오세요`
+                    li
+                        a.logout(href=routers.logout) 로그아웃
+                    li     
+                        a.userDetail(href=`/user/${user.email}`) 유저정보
+                    li
+                        a.analUser(href=routers.analUser) 유저정보맞춤 공모전/장학금 보기
+                    li 
+                        a.analHand(href=routers.analHand) 자가맞춤 공모전/장학금 보기
+        .header_column
+            ul
+                li
+                    a(href="") 공모전(ajax처리) 1
+                li
+                    a(href="") 대외활동(ajax처리) 2
+                li
+                    a(href="") 장학금(ajax처리) 3
+                li
+                    a(href="") 기타(ajax처리) 4
+                li
+                    a(href="") 오픈채팅방(ajax처리)
