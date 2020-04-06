@@ -1,4 +1,17 @@
 extends layouts/main
+include layouts/mixin/postSimpleShowView
 
 block content
-    p post
+    .home_container
+        .home_column
+            .posts
+                each item in posts
+                    +postSimpleShowView({
+                        id: item.id,
+                        imageUrl: item.imageUrl,
+                        title: item.title,
+                        separate: item.separate,
+                        target : item.target,
+                        view : item.view,
+                        created_at : item.created_at
+                    })

@@ -3,7 +3,7 @@ import stringify from "csv-stringify/lib/sync";
 import puppeteer from "puppeteer";
 import fs from "fs";
 import axios from "axios";
-import { Post } from "./models";
+import { Poster } from "./models";
 
 const csv = fs.readFileSync(`csv/data.csv`);
 const records = parse(csv.toString("utf-8"));
@@ -127,10 +127,12 @@ const saveDatabase = async () => {
             //  3: 대외활동
             //  4: 기타..
 
+            //test용
+            const randomNum = Math.floor(Math.random() * (3-0+1) + 1);
             //db에 넣기
-            await Post.create({
+            await Poster.create({
                 title: postTitle,
-                divide: 1,
+                divide: randomNum,
                 separate: postSeparate,
                 target : postTarget,
                 agency: postAgency,

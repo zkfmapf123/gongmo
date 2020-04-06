@@ -27,12 +27,16 @@
         .header_column
             ul
                 li
-                    a(href="") 공모전(ajax처리) 1
+                    form(action=`/view/post` method="get")
+                        input(type="submit" value="공모전" name="name")
                 li
-                    a(href="") 대외활동(ajax처리) 2
+                    form(action=`/view/post` method="get")                                     
+                        input(type="submit" value="대외활동" name="name")
                 li
-                    a(href="") 장학금(ajax처리) 3
+                    form(action=`/view/post` method="get")
+                        input(type="submit" value="장학금"  name="name")
                 li
-                    a(href="") 기타(ajax처리) 4
+                    form(action=`/view/post` method="get")
+                        input(type="submit" value="기타"  name="name") 
                 li
-                    a(href="") 오픈채팅방(ajax처리)
+                    a(type="submit") 오픈채팅방

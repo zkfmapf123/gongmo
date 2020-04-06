@@ -9,8 +9,10 @@ block content
                 h3.postDivide= `분류 : 공모전`
             else if posts.divide === 2
                 h3.postDivide= `분류 : 장학금`
-            else
-                h3.postDivide= `분류 : 대회활동`
+            else if posts.divide === 3
+                h3.postDivide= `분류 : 대외활동`
+            else    
+                h3.postDivide= `분류 : 기타`
             h3.postTarget= `응모대상 : ${posts.target}`
             h3.postAgency= `주최기관 : ${posts.agency}`
             h3.postPeriod= `기간 : ${posts.period}`
@@ -22,11 +24,42 @@ block content
             h3.postView= view
 
         .postDetail_column
-            form.commentForm
+            .seeboard_column
                 if user
-                    button(type="submit") 글 쓰기
-                    button(type="submit") 글 수정하기
-                    button(type="submit") 글 삭제하기
+                    form#seeboardFormInUser
+                        h4#userNickName= user.nickName
+                        textarea(id= "seeboardText" name="comment" cols="100", row="150" placeholder="의견을 적어주세요")
+                        button(type="submit") 글 쓰기
+                    form#seeboardFormInUserDelete
+                        button(type="submit") 글 삭제하기
                 else
-                    span=`글쓰기 권한이 없습니다.`
+                    form#seeboardFormNotUser
+                        span= `Guset`
+                        textarea(name="comment" cols="30", row="100" placeholder="글쓰기 권한이 없습니다.")
+                        button(type="submit") 글 쓰기
+                        button(type="submit") 글 수정하기
+                        button(type="submit") 글 삭제하기
+            .seeboard_column
+                table
+                    for commentUser in commentUsers
+                        thead
+                            tr
+                                th= commentUser.nickName
+                                th
+                                th
+                                th
+                        tbody
+                            tr
+                                th= commentUser.comment
+                                td
+                                td
+                                td 
+                            tr
+                                td  
+                                td 
+                                td 
+                                td= commentUser.createdAt 
+                    //수정기능form#seeboardFormInUserModify
+                        어디다 위치해야하냐...button(type="submit")
+                                각 <td calspan=4> 값 </td>
                         

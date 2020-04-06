@@ -15,6 +15,7 @@ import { sequelize } from "./models";
 import MYSQLStore from "express-mysql-session";
 import passport from "passport";
 import passportConfig from "./passport";
+import seeboardRouter from "./routers/seeboardRouter";
 
 dotenv.config();
 const app = express();
@@ -59,6 +60,7 @@ app.use(routers.home,homeRouter);
 app.use(routers.view,viewRouter);
 app.use(routers.anal,analRouter);
 app.use(routers.user,userRouter);
+app.use(routers.seeboard,seeboardRouter);
 
 //init
 app.listen(PORT,()=>console.log(`http://localhost:${PORT} success`));

@@ -1,7 +1,6 @@
 import routers from "../ROUTERS";
 import bcrypt from "bcrypt"
-import { User, Post } from "../models";
-
+import { User, Poster } from "../models";
 
 export const home = async(req,res,next)=>{
     //지정된 시간에 session 다 지우자...
@@ -10,14 +9,14 @@ export const home = async(req,res,next)=>{
 
     try{
         //일단은 전체적인 것만 나오게끔하자...
-        const posts = await Post.findAll({});
+        const posts = await Poster.findAll({});
 
         //view 높은거 5~10개정도
 
         //최근만들어진거 5~10개정도
-        
-        res.render("home",{posts});
-        
+        if(posts) res.render("home",{posts});
+        else res.render("home",{posts:[]});
+
     }catch(error){
         console.error(error);
         next(error);

@@ -1,11 +1,10 @@
 import express from "express";
+import { apiPost, post, postDeatil } from "../controllers/viewController";
 import routers from "../ROUTERS";
-import { post, postDeatil } from "../controllers/viewController";
 
 const viewRouter = express.Router();
 
-viewRouter.get(routers.home,(req,res)=> res.send("view"));
-
+viewRouter.get(routers.home,(req,res)=>res.send("view"));
 viewRouter.get(routers.post,post);
 viewRouter.get(routers.postDetail(),postDeatil);
 

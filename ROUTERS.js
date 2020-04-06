@@ -22,6 +22,12 @@ const ANAL_USER = "/:id";
 const ANAL_HAND = "/hand";
 const ANAL_TOTAL = "/total";
 
+//seeboard
+const SEEBOARD = "/seeboard";
+const SEEBOARD_CREATE = "/create";
+const SEEBOARD_MODIFY = "/modify";
+const SEEBOARD_DELETE = "/delete";
+
 const routers = {
     //home
     home : HOME,
@@ -60,7 +66,12 @@ const routers = {
         else return ANAL_USER;
     },
     analHand : ANAL_HAND,
-    analTotal : ANAL_TOTAL
+    analTotal : ANAL_TOTAL,
+
+    seeboard : SEEBOARD,
+    seeboardCreate : SEEBOARD_CREATE,
+    seeboardModify : SEEBOARD_MODIFY,
+    seeboardDelete : SEEBOARD_DELETE
 };
 
 export default routers;

@@ -1,6 +1,6 @@
-mixin postSimpleShow(post={})
+mixin postSimpleShowView(post={})
     .postSimpleColumn
-        a(href=`/view/post/${post.id}`)
+        a(href=`post/${post.id}`)
             image.simple(src=`${post.imageUrl}` width= 200 height= 400)     
             h3.simpleTitle= post.title
             h3.simpleDivide= post.divide
