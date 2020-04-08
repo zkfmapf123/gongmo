@@ -1,52 +1,54 @@
 const seeboardFormInUser = document.getElementById("seeboardFormInUser");
-const seeboardText = document.getElementById("seeboardText");
+const seeboardText = document.getElementById("seeboardText"); //게시글
+const seeboardPosterTitle = document.querySelector(".postDetail_column h3");
 const seeboardFormInUserDelete = document.getElementById("seeboardFormInUserDelete");
 
-const seeboardFormNotUser = document.getElementById("seeboardFormNotUser");
+const textName = document.querySelector(".seeboard_column span");
+const textComment = document.querySelector(".seeboard_column h3");
+const textCreateAt = document.querySelector(".seeboard_column p");
 
-//유저 시 : 글 새로만들기
+/*                  유저 시 : 글 새로만들기                 */
 seeboardFormInUser.addEventListener("submit",(e)=>{
     e.preventDefault();
 
     //정리
     const text = seeboardText.value;
-    const nickName = document.getElementById("userNickName").innerText;
-    const postTitle = document.querySelector(".postDetail_column h3").innerText;
+    const postTitle = seeboardPosterTitle.innerText;
+
+    console.log(`postTitle : ${postTitle} seeboardText : ${text}`);
 
     const xhr = new XMLHttpRequest();
 
-    //받기
-    xhr.onload = () =>{
-        if(xhr.status === 201) {
-            //성공 시
-            console.log(xhr.responseText);
-        }else{
-            //실패 시
-            console.log(xhr.responseText);
-        }
-    }
     //보내기
+    xhr.onload = ()=>{
+        if(xhr.status===200){
+            const comments = JSON.parse(xhr.responseText);
+            console.log(comments);
+
+            //아 .. 이거문제야...
+            
+            textName.textContent= comments.nickName;
+            textComment.textContent= comments.comment;
+            textCreateAt.textContent= comments.createdAt;
+
+        }else{
+            console.log(xhr.responseText);
+        }  
+    }
+
 
     xhr.open("post",`/seeboard/create`);
     xhr.setRequestHeader("Content-type","application/json");
     xhr.send(JSON.stringify({
-        nickName : nickName,
+        postTitle : postTitle,
         text : text,
-        postTitle : postTitle
     }));
 
-    text.value = "";
+    seeboardText.value = "";
 });
 
 //유저 시 : 삭제기능
 seeboardFormInUserDelete.addEventListener("submit",(e)=>{
     e.preventDefault();
     alert("삭제안돼아직은");
-})
-
-//유저 아닐 시 : 아무것도 안됨
-seeboardFormNotUser.addEventListener("submit",(e)=>{
-    e.preventDefault();
-    
-    alert("로그인이 필요한 기능입니다.");
-})
+});

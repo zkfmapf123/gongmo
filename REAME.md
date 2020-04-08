@@ -43,3 +43,9 @@ ajax 이용해서 페이지 이동과 값전달 같이 하는법 알아보자...
 - analUser
 - analHand
 - analTotal
+
+## 해야할 목록
+1. home에서 2가지 컬럼대로 2개의 뷰화면을 보여주고 horizen으로 보여주기
+2. comment하기
+3. 오픈채팅만들어보기
+4. imageBlock에다가 "찜" 버튼 만들어서 userPoster에 favorite버튼 true
