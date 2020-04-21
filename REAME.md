@@ -11,16 +11,28 @@ search해서 ajax로 뿌려주자
 mixin 작업 home에서 뿌려주기  o
 detail작업하기              o
 
-## 4월 1일 할거
-게시판 만들자...  
-ajax 이용해서 페이지 이동과 값전달 같이 하는법 알아보자...
+## 4월 1일 할거  
+## 4월 13일 자 기준 해야할것..
+- 유저삭제를 ajax로 해보자...
+- 맞춤공모전 만들자
+- 슬슬 front작업 하자
+- RN 도 준비하자
+
+## 4월 19일 해야할거
+-- post front작업
+-- user front작업
+-- 맞춤공모전 front작업
 
 ## 추가해야할 기능
-1. ajax를 이용해서 공모전 ~ 기타 까지 한번에 뿌려주기 알맞은거..(공부해야함)
-2. 찜한목록만들기
-3. 지금은 게시판 작업먼저...
-4. seeboardController작업하고 postDetail에서 게시글관련해서 뿌려줘야하는 기능도 추가해야하마...
-5. N : M기능에서 디비작업을 어떻게 하냐... 망할 시퀄라이즈
+- 검색기능(정규표현식 하면 쉬울듯...), 맞춤공모전
+- 오픈채팅방은 고민해보자..
+- view/posts에서 -N 남은거 표시하기 그건 오른쪽에 보기좋게 표시하자(CSS영역) -- 굳이?
+- front(React Native는 그냥 proxy 설정해서 하자..)
+- webpack js파일 번들링 공부하자(블로그참조)
+- Infinity Scroll을 적용해보자..
+- 광고배너 3~4개 랜덤으로 움직이게
+- 댓글창에 수정 신고 삭제 추가하자...
+- 반응형 웹 생각해보자 --> 크기를 줄이면 글자가 깨진다.
 
 - home O
 - loin O
@@ -31,21 +43,3 @@ ajax 이용해서 페이지 이동과 값전달 같이 하는법 알아보자...
 - view O
 - post O
 - postDeatil O
-
-### 여기는 사이드바 형식으로 두자..
-- user
-- userDetail
-- userModify
-- userDelete
-- 추후 만들거 (찜한 내역);
-
-- anal
-- analUser
-- analHand
-- analTotal
-
-## 해야할 목록
-1. home에서 2가지 컬럼대로 2개의 뷰화면을 보여주고 horizen으로 보여주기
-2. comment하기
-3. 오픈채팅만들어보기
-4. imageBlock에다가 "찜" 버튼 만들어서 userPoster에 favorite버튼 true

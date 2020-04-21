@@ -10,8 +10,10 @@ userRouter.get(routers.home,(req,res)=>res.send("/user"));
 /* user */
 userRouter.get(routers.userDetail(),isUser,userDetail);
 userRouter.post(routers.userDetail(),isUser,apiUserDetail);
+
 userRouter.get(routers.userModify(),isUser,userModify);
 userRouter.post(routers.userModify(),isUser,apiUserModify);
-userRouter.get(routers.userDelete(),isUser,apiUserDelete);
+
+userRouter.post(routers.userDelete(),isUser,apiUserDelete);
 
 export default userRouter;

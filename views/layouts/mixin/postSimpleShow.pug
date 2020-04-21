@@ -2,9 +2,9 @@ mixin postSimpleShow(post={})
     .postSimpleColumn
         a(href=`/view/post/${post.id}`)
             image.simple(src=`${post.imageUrl}` width= 200 height= 400)     
-            h3.simpleTitle= post.title
-            h3.simpleDivide= post.divide
-            h3.simpleSepareate= post.separate
-            h3.simpleTarget= post.target
-            h3.simpleView= post.view
-            h3.simpleCreatedAt= post.created_at
+            h4.simpleTitle= post.title
+            h4.simpleDivide= post.divide
+            h4.simpleSepareate= post.separate
+            h4.simpleTarget= post.target
+            h4.simpleView= post.view
+            h4.simplePeriod= post.period

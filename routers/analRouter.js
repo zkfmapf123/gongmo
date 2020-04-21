@@ -1,12 +1,11 @@
 import express from "express";
 import routers from "../ROUTERS";
-import { isUser } from "../localsMiddleware";
+import {getAnalTotal, postAnalTotal } from "../controllers/analControllers";
 
 const analRouter = express.Router();
 
 analRouter.get(routers.home,(req,res)=>res.send("anal"));
-analRouter.get(routers.analHand,(req,res)=>res.send("analHand"));
-analRouter.get(routers.analTotal,(req,res)=>res.send("analTotal"));
-analRouter.get(routers.analUser(),isUser,(req,res)=>res.send("analUser"));
+analRouter.get(routers.analTotal,getAnalTotal);
+analRouter.post(routers.analTotal,postAnalTotal);
 
 export default analRouter;

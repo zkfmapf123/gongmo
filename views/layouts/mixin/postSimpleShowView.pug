@@ -2,9 +2,9 @@ mixin postSimpleShowView(post={})
     .postSimpleColumn
         a(href=`post/${post.id}`)
             image.simple(src=`${post.imageUrl}` width= 200 height= 400)     
-            h3.simpleTitle= post.title
+            h3.simpleTitle= `제목 : ${post.title}`
             h3.simpleDivide= post.divide
-            h3.simpleSepareate= post.separate
-            h3.simpleTarget= post.target
-            h3.simpleView= post.view
-            h3.simpleCreatedAt= post.created_at
+            h3.simpleSepareate= `분류 : ${post.separate}`
+            h3.simpleTarget= `응모대상 : ${post.target}`
+            h3.simpleView= `조회 수 : ${post.view}`
+            h3.simplePeriod= post.period

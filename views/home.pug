@@ -14,7 +14,18 @@ block content
                         separate: item.separate,
                         target : item.target,
                         view : item.view,
-                        created_at : item.created_at
+                        period : item.period
                     })
         .home_column
             h3 최신 자료
+            .posts
+                each item in posts2
+                    +postSimpleShow({
+                        id: item.id,
+                        imageUrl: item.imageUrl,
+                        title: item.title,
+                        separate: item.separate,
+                        target : item.target,
+                        view: item.view,
+                        period: item.period
+                    })

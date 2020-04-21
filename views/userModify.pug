@@ -5,9 +5,13 @@ block content
         .column
             form(action=`/user/${user.email}/modify` method="post")
                 input#nickname(type="text" name="nickname" placeholder="변경할 닉네임을 적어주세요" required= true)
-                input#university(type="text" name="university" placeholder= "ex) --대학교 --전문대학" required= true)
-                input#grade(type="number" name="grade" placeholder="ex) 2학년=> 2, 3학년=>3" required= true)
-                input#score(type="number" name="score" step="0.01" placeholder="ex) 4.35, 3.26" required= true)
+                label(for="label") 응모대상 
+                label(for="label") 대학생
+                    input#target(type="radio" name="target" value="1")
+                label(for="label") 청소년
+                    input#target(type="radio" name="target" value="2")
+                label(for="label") 기타
+                    input#target(type="radio" name="target" value="3")
                 input#city(type="text" name="city" placeholder="ex) 서울, 인천" required= true)
                 textarea(name="comment" cols="30", rows="10" placeholder="자기를 뽐낼 멋진말을 적어주세요" required= true)
                 input(type="submit" value="유저정보변경")

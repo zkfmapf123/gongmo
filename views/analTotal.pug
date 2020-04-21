@@ -1,0 +1,55 @@
+extends layouts/main
+include layouts/mixin/postSimpleShowView
+
+block content
+    .analContainer
+        .analColumn
+            form(action=`/anal/total` method="post")
+                div
+                    label 검색내용 
+                        input(type="text" name="findTitle" placeholder="검색내용을 입력하세요") 
+                div
+                    label 대학생 
+                        input(type="radio" name="target" value="1")
+                    label 청소년 
+                        input(type="radio" name="target" value="2")
+                    label 기타 
+                        input(type="radio" name="target" value="3")    
+                div
+                    label 광고/마케팅 
+                        input(type="radio" name="separate" value="광고/마케팅")
+                    label 영상/UCC/사진 
+                        input(type="radio" name="separate" value="영상/UCC/사진")
+                    label 웹/모바일/플래시 
+                        input(type="radio" name="separate" value="웹/모바일/플래시")
+                    label 예체능/미술/음악 
+                        input(type="radio" name="separate" value="예체능/미술/음악")
+                    label 대외활동/서포터즈 
+                        input(type="radio" name="separate" value="대외활동/서포터즈")
+                    label 기획/아이디어
+                        input(type="radio" name="separate" value="기획/아이디어")
+                    label 논문/리포트 
+                        input(type="radio" name="separate" value="논문/리포트")
+                    label 과학/공학 
+                        input(type="radio" name="separate" value="과학/공학")
+                    label 문학/글/시나리오 
+                        input(type="radio" name="separate" value="문학/글/시나리오")
+                    label 기타 
+                        input(type="radio" name="separate" value="기타")
+                input(type="submit" value="검색")
+        .analColumn
+                a#viewSort(href="") 조회 수 순
+                a#createSort(href="") 등록일 순
+                a#generalSort(href="") 가나다 순
+        .analColumn
+            each item in posts
+                +postSimpleShowView({
+                    id: item.id,
+                    imageUrl: item.imageUrl,
+                    title: item.title,
+                    separate: item.separate,
+                    target : item.target,
+                    view : item.view,
+                    created_at : item.created_at
+                })
+            

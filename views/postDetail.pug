@@ -3,7 +3,30 @@ extends layouts/main
 block content
     .postDeatil_container
         .postDetail_column
-            image(src=`${posts.imageUrl}` width=200 height= 500)
+            if user
+                div 
+                    a#goodPoint(href="")
+                        i.far.fa-thumbs-up 좋아요
+                        span#good= `${posts.goodPoint}`
+                div
+                    a#badPoint(href="") 
+                        i.far.fa-thumbs-down 싫어요
+                        span#bad= `${posts.badPoint}`
+                div
+                    a#favorite(href="")
+                        i.far.fa-star 찜하기
+            else
+                div 
+                    i.far.fa-thumbs-up 좋아요
+                    span= `${posts.goodPoint}`
+                div
+                    i.far.fa-thumbs-down 싫어요
+                    span= `${posts.badPoint}`
+            div
+                a(href="#seeboard") 
+                    i.far.fa-comment 댓글 창 이동하기
+        .postDetail_column
+            image(src=`${posts.imageUrl}` width=900 height= 800)
             h3.postTitle= `제목 : ${posts.title}`
             if posts.divide === 1
                 h3.postDivide= `분류 : 공모전`
@@ -27,17 +50,27 @@ block content
             .seeboard_column
                 if user
                     form#seeboardFormInUser
-                        h4#userNickName= user.nickName
-                        textarea(id= "seeboardText" name="comment" cols="100", row="150" placeholder="의견을 적어주세요")
+                        div
+                            i.fas.fa-user
+                            h4#userNickName= user.nickName
+                        div
+                            textarea(id= "seeboardText" name="comment" cols="100", row="300" placeholder="의견을 적어주세요")
                         button(type="submit") 글 쓰기
                     form#seeboardFormInUserDelete
                         button(type="submit") 글 삭제하기
                 else
                     span= `Guest는 댓글에 참여 할 수 없습니다.`
+                a#seeboard
             .seeboard_column
                 for item in comments
+                    i.fas.fa-user
                     span= item.nickName
                     h3= item.comment
                     p= item.createdAt
+                    span
+                        a 수정
+                        a 삭제
+                        a 신고
+
 
                         

@@ -4,37 +4,49 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node app.js --delay 2",
-    "data:start" : "babel-node dataCrawler.js"
-  }, 
+    "dev:server": "nodemon --exec babel-node app.js --delay 2",
+    "dev:assets": "webpack --mode development -w",
+    "build:assets" : "WEBPACK_ENV=production webpack",
+    "data:start": "babel-node dataCrawler.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@babel/node": "7.8.7",
+    "@babel/polyfill": "7.8.7",
     "@babel/preset-env": "7.9.0",
+    "autoprefixer": "9.7.6",
     "axios": "0.19.2",
     "bcrypt": "4.0.1",
     "body-parser": "1.19.0",
     "cookie-parser": "1.4.5",
+    "css-loader": "3.5.2",
     "csv-parse": "4.8.8",
     "csv-stringify": "5.3.6",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "express-mysql-session": "2.1.4",
     "express-session": "1.17.0",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
     "helmet": "3.21.3",
     "morgan": "1.10.0",
     "mysql": "2.18.1",
     "mysql2": "2.1.0",
+    "node-sass": "4.13.1",
     "passport": "0.4.1",
     "passport-local": "1.0.0",
+    "postcss-loader": "3.0.0",
     "pug": "2.0.4",
     "puppeteer": "2.1.1",
+    "sass-loader": "8.0.2",
     "sequelize": "4.44.4",
     "xlsx": "0.15.6"
   },
   "devDependencies": {
-    "nodemon": "2.0.2"
+    "babel-loader": "8.1.0",
+    "nodemon": "2.0.2",
+    "webpack": "4.42.1",
+    "webpack-cli": "3.3.11"
   }
 }

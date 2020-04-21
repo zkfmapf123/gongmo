@@ -1,0 +1,56 @@
+.user_container{
+
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    
+
+    .user_column{
+        margin : 10px 200px 10px 200px;
+    }
+
+    .user_column:nth-child(1){ //유저
+        div{
+            padding : 20px;
+            
+            label{
+                font-size : 24px;
+                margin-right: 20px;
+            }
+
+            span{
+                font-size : 24px;
+            }
+
+            form{
+                display: inline;
+                padding-right: 10px;
+                
+                button{
+                    font-size : 24px;
+                }
+
+                input{
+                    font-size : 24px;
+                }
+            }
+        }
+    }
+
+    .user_column:nth-child(2){ //찜하기
+        
+        h1{
+            font-size : 24px;
+            padding : 10px;
+        }
+
+        ul{
+            a{
+                text-decoration: none;
+            }
+
+            li{
+                font-size : 24px;
+            }
+        }
+    }
+}

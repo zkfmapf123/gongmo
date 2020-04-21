@@ -77,6 +77,7 @@ const cralwer = async()=>{
                 console.log(img);
             }
 
+            //이거 중복문제 있을 수 있기 때문에 나중에는 적절한 url방법을 써야한다.
             const randomUrl = Math.floor(Math.random() * (7000 - 1000) + 2000);
 
             return [title,separate,whois,company,period,amout,homepage,description,img,randomUrl];

@@ -1,5 +1,4 @@
 import { Poster, UserPoster, Comment, User } from "../models";
-import fs from "fs";
 
 export const apiPost = async(req,res,next)=>{
     res.render("post");
@@ -23,58 +22,58 @@ export const postDeatil = async(req,res)=>{
             await Poster.update({
                 view : viewNumber},{where : { id : posts.id}
             });
+        }
+        /*              댓글 기능               */
+        let comments = [];
+        let commentsId =[];
 
-            /*              댓글 기능               */
-            let userPoster = [];
-            let comments = [];
+        commentsId = await UserPoster.findAll({
+            attribute : ["id","userId"],
+            where : {
+                posterId : postId
+            }
+        });
 
-            //for of 문으로 동기식운영으로 짜자.
-            const posterId = req.params.id;
+        for (const [i] of commentsId.entries()) {
 
-            userPoster = await UserPoster.findAll({
-                attributes:["userId","commentId"],
-                where : { posterId : posterId}
+            let nickName;
+            let commentInformation;
+
+            console.log(`id : ${commentsId[i].id}`);
+            console.log(`userId : ${commentsId[i].userId}`);
+
+            //해당 유저의 닉네임을 찾는다.
+            nickName = await User.findOne({
+                attribute: ["nickName"],
+                where: {
+                    id: commentsId[i].userId
+                }
             });
 
-            //댓글 창
-            for(const[i] of userPoster.entries()){
+            //해당 userPosterId 해당하는 comment, createAt를 찾는다
+            commentInformation = await Comment.findOne({
+                attribute: ["comment", "createdAt"],
+                where: {
+                    userPosterId: commentsId[i].id
+                }
+            });
 
-                let userNickName;
-                let userComment;
-                let userCommentCreateAt;
+            if(commentInformation === null){
+                //userposter는 존재하나 comment는 존재하지 않을 때...
+                console.log("null");
+            } else {
 
-                console.log(`userId : ${userPoster[i].userId}, commentId :${userPoster[i].commentId}`);
-
-                userNickName = await User.find({
-                    attributes:["nickName"],
-                    where : {id : userPoster[i].userId}
+                let time = commentInformation.createdAt.toString().split("T");
+                //comments.push 해주면된다.
+                comments.push({
+                    nickName: nickName.nickName,
+                    comment: commentInformation.comment,
+                    createdAt: time[0]
                 });
-
-                console.log(userNickName.nickName);
-
-                userComment = await Comment.find({
-                    attributes:["comment","createdAt"],
-                    where :{id : userPoster[i].commentId}
-                });
-
-                console.log(userComment.comment);
-
-                let created_at = userComment.createdAt.toString();
-                //나중에 시간 가공하자...
-
-                console.log(created_at);
-
-                comments.push({nickName : userNickName.nickName, 
-                               comment  : userComment.comment,
-                               createdAt : created_at});
-            };
-
-            //console.log(comments);
-
-            //여기서 중요한건 정렬을 해줘야한다..
-            //배열안에서 createAt을 중심으로 최신순으로 정렬알고리즘을 진행해야한다...
-            res.render("postDetail", { posts, comments });
+            }
         }
+        res.render("postDetail",{posts,comments});
+
     }catch(error){
         console.error(error);
     }

@@ -7,10 +7,14 @@ block content
                 input(type="email" name="username" placeholder="아이디" requied= true)
                 input(type="password" name="password" placeholder="비밀번호" requied=true)
                 input(type="submit" value="로그인")
-        .form_column
+        .form_column.loginMethod
             div
-                a(href="") 카카오톡 로그인
+                a#kakao(href="") 
+                    i.fab.fa-kickstarter   
+                        span 카카오톡 로그인
             div
-                a(href="") 구글 로그인
+                a#google(href="")
+                    i.fab.fa-google   
+                        span 구글 로그인
 
         .form_column

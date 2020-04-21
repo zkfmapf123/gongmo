@@ -1,0 +1,175 @@
+.postDeatil_container{
+
+    .postDetail_column{
+        margin : 10px 100px 10px 100px;
+    }
+    
+    //좋아요 , 싫어요, 찜하기 등등
+    .postDetail_column:nth-child(1){
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size : 20px;
+
+        div{
+            padding-right: 20px;
+            margin-top : 20px;
+            margin-bottom : 20px;
+
+            a{
+                text-decoration: none;
+
+                i{
+                    padding-right: 10px;
+                }
+            }
+
+            a:hover {
+                font-size : 30px;
+            }
+        }
+    }
+
+    .postDetail_column:nth-child(2){
+        
+        text-align: center;
+        .postTitle{
+            margin-top : 20px;
+            text-align: left;
+            font-size : 40px;
+        }
+
+        .postDivide{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postTarget{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postAgency{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postPeriod{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postAmount{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postLink{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postText{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 25px;
+            letter-spacing: 4px;
+        }
+
+        .postCreateAt{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+
+        .postView{
+            margin-top: 20px;
+            text-align: left;
+            font-size : 30px
+        }
+    }
+    
+    .postDetail_column:nth-child(3){
+
+        .seeboard_column:nth-child(1){
+            margin-bottom: 20px;
+            
+            form{
+                display: inline;
+                div:nth-child(1){
+                    margin-bottom: 20px;
+                    i{
+                        display: inline;
+                        font-size : 60px;
+                    }
+
+                    h4{
+                        display: inline;
+                        font-size : 24px;
+                    }
+                }
+                div:nth-child(2){
+
+                    textarea{
+                        margin-bottom: 10px;
+                    }
+                }
+
+                button{
+                    display: inline;
+                    font-size : 25px;
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        .seeboard_column:nth-child(2){ //댓글 창
+        
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-top : 1px dotted #aaa69d;
+            border-bottom : 1px dotted #aaa69d;
+
+            display: flex;
+            flex-direction: row;
+
+            i{
+                border : 3px #1B9CFC solid;
+                border-radius: 10px;
+                padding : 5px;
+                font-size : 60px;
+                margin-right: 20px;
+            }
+
+            span{
+                font-size : 24px;
+                padding-right: 100px;
+                padding-top: 25px;
+            }
+
+            h3{
+                width: 60%;
+                font-size : 20px;
+                padding-top : 16px;
+                margin-top : 12px;
+            }
+
+            span{
+                display: flex;
+                flex-direction: row;
+                text-align: right;
+                
+                a{
+                    margin-right: 10px;
+                }
+            }
+
+        }
+    }
+}

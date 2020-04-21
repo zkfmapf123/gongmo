@@ -9,13 +9,24 @@ export const home = async(req,res,next)=>{
 
     try{
         //일단은 전체적인 것만 나오게끔하자...
-        const posts = await Poster.findAll({});
+        //const posts = await Poster.findAll({});
 
         //view 높은거 5~10개정도
+        const posts = await Poster.findAll({
+            attribute : ["id","imageUrl","title","divide","separate","target","view","period"],
+            order:[["view","desc"]],
+            limit : 3
+        });
+
+        const posts2 = await Poster.findAll({
+            attribute : ["id, imageUrl","title","divide","separate","target","view","period"],
+            order:[["created_at","desc"]],
+            limit : 3
+        });
 
         //최근만들어진거 5~10개정도
-        if(posts) res.render("home",{posts});
-        else res.render("home",{posts:[]});
+        if(posts) res.render("home",{posts, posts2});
+        else res.render("home",{posts:[], posts2:[]});
 
     }catch(error){
         console.error(error);
@@ -40,6 +51,7 @@ export const join = (req,res)=>{
 }
 
 export const postJoin = async(req,res,next)=>{
+
     const email = req.body.email;
     const password = req.body.password;
     const passwordCheck = req.body.passwordCheck;

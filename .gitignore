@@ -118,5 +118,8 @@ dist
 config/
 models/
 package-lock.json
+advertise/
+static/
+poster/
 
 

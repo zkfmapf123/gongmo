@@ -18,8 +18,6 @@ const USER_DELETE = "/:id/delete";
 
 //analysis
 const ANAL = "/anal";
-const ANAL_USER = "/:id";
-const ANAL_HAND = "/hand";
 const ANAL_TOTAL = "/total";
 
 //seeboard
@@ -27,6 +25,11 @@ const SEEBOARD = "/seeboard";
 const SEEBOARD_CREATE = "/create";
 const SEEBOARD_MODIFY = "/modify";
 const SEEBOARD_DELETE = "/delete";
+
+//api
+const API = "/api";
+const API_POINT = "/apiPoint";
+const API_POINT_FAVORITE = "/apiFavorite";
 
 const routers = {
     //home
@@ -61,17 +64,16 @@ const routers = {
     
     //anal
     anal : ANAL,
-    analUser : (id)=>{
-        if(id) return `/anal/${id}`;
-        else return ANAL_USER;
-    },
-    analHand : ANAL_HAND,
     analTotal : ANAL_TOTAL,
 
     seeboard : SEEBOARD,
     seeboardCreate : SEEBOARD_CREATE,
     seeboardModify : SEEBOARD_MODIFY,
-    seeboardDelete : SEEBOARD_DELETE
+    seeboardDelete : SEEBOARD_DELETE,
+
+    api : API,
+    apiPoint : API_POINT,
+    apiFavorite : API_POINT_FAVORITE
 };
 
 export default routers;

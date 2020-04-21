@@ -16,6 +16,7 @@ import MYSQLStore from "express-mysql-session";
 import passport from "passport";
 import passportConfig from "./passport";
 import seeboardRouter from "./routers/seeboardRouter";
+import apiRouter from "./routers/apiRouter";
 
 dotenv.config();
 const app = express();
@@ -30,7 +31,9 @@ app.set("view engine","pug");
 app.use(morgan("tiny"));
 app.use(helmet());
 app.use("/poster",express.static("poster"));
-app.use(express.static("static"));
+app.use("/advertise",express.static("advertise"));
+app.use("/assets",express.static("assets")); //이거지워야됨
+app.use("/static",express.static("static"));
 app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(cookieParse());
@@ -61,6 +64,7 @@ app.use(routers.view,viewRouter);
 app.use(routers.anal,analRouter);
 app.use(routers.user,userRouter);
 app.use(routers.seeboard,seeboardRouter);
+app.use(routers.api,apiRouter);
 
 //init
 app.listen(PORT,()=>console.log(`http://localhost:${PORT} success`));

@@ -10,26 +10,27 @@ block content
                 label 닉네임
                 span#nickName
             div
-                label 출신대학교
-                span#univ
-            div
-                label 학년
-                span#grade
-            div
-                label 평균학점
-                span#score
+                label 대상
+                span#target
             div
                 label 거주지역
                 span#livesCity
             div
                 label 자기소개
                 span#comment
-                
-
+            div
+                form#userDetail
+                    button(type="submit") 유저 조회
+                form(action=`/user/${user.email}/modify` method="get")
+                    input(type="submit" value="유저 수정")
+                form#userDelete
+                    button(type="submit") 유저 삭제
         .user_column
-            form#userDetail
-                button(type="submit") 유저 조회
-            form(action=`/user/${user.email}/modify` method="get")
-                input(type="submit" value="유저 수정")
-            form(action=`/user/${user.email}/delete` method="get")
-                input(type="submit" value="유저 삭제")
+            h1 찜한 목록
+            h3= favorite
+                for item in favoritePoster
+                    ul
+                        a(href=`/view/post/${item.id}`)
+                            li 
+                                h5= `제목 : ${item.title}`
+                                h5= `기간 : ${item.period}`

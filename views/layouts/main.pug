@@ -3,13 +3,14 @@ html
     head
         title= title
         <script src="https://kit.fontawesome.com/35fb68f7ee.js" crossorigin="anonymous"></script>
+        link(rel="stylesheet", href="/static/styles.css")
     body
         header
             include header
         main
             block content
-        <script src="/main/user.js"></script>
-        <script src="/item/item.js"></script>
-        <script src="/seeboard/seeboard.js"></script>
+        script(src="/assets/js/seeboard.js")
+        script(src="/assets/js/user.js")
+        script(src="/static/[main].js")
         footer
             include footer

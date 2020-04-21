@@ -1,72 +1,140 @@
-import { Comment, Poster, UserPoster } from "../models";
+import { Comment, Poster, UserPoster} from "../models";
 
 export const apiCreate = async(req,res,next)=>{
-    const userId = req.user.id; //유저아이디
-    const commentText = req.body.text;
+    const userId = req.user.id;
     const postTitle = req.body.postTitle.substring(5);
-    
-    let posterId; //포스터 아이디
-    let commentId; //댓글 정보 아이디
+    const text = req.body.text;
 
-    //ajax로 넘겨줄거
-    let jsonArr = [];
-    let jsonUserNickName = req.user.nickName; 
-    let jsonCommentText = "";
-    let jsonCreatAt = "";
+    let posterId;
     
-    console.log(`userId : ${userId}
-                 postTitle : ${postTitle}
-                 commentText : ${commentText}`);
-
+    //userId == commentId
+    
     try{
-        // 1.posterId를 찾자
-        const posts = await Poster.find({
-            where : {title : postTitle}
+        //posterId를 찾고
+        const poster = await Poster.findOne({
+            attribute:["id"],
+            where : { title : postTitle}
         });
-
-        posterId = posts.id;
-        console.log(posterId);
-
-        if(posterId){
-            // 2.comment 생성
-            const comment = await Comment.create({
-                comment : commentText
+        
+        let userPoster;
+        if(poster){
+            posterId = poster.id;
+            let userPosterId;
+            //userPoster를 만들어줄거다.
+            //이미 userPoster가 존재한다면... (댓글 이미썻음)
+            userPoster = await UserPoster.findOne({
+                where :{
+                    userId : userId,
+                    posterId : posterId
+                }
             });
 
-            if(comment){
-                console.log("comment 생성");
-                commentId = comment.id;
-                jsonCommentText = comment.comment;
-                jsonCreatAt = comment.createdAt.toString();
-
-                //3.userposter 생성
-                const userPoster = await UserPoster.create({
+            //댓글이 존재하지 않다면
+            if(userPoster === null){
+                await UserPoster.create({
                     userId : userId,
                     posterId : posterId,
-                    commentId : commentId,
-                    favorite: false
+                    favorite : false
+                });
+            
+                //comment를 만든다
+                userPosterId = await UserPoster.findOne({
+                    attribute:["id"],
+                    where :{
+                        userId : userId,
+                        posterId : posterId,
+                    }
                 });
 
-                if(userPoster) console.log("userPoster 생성");
+                if(userPosterId){
+                    await Comment.create({
+                        userPosterId : userPosterId.id,
+                        comment : text
+                    });
+                }
+                res.status(200).json("success comment");
+            }else{
 
-                //해당 유저 아이디랑, 코맨트를 넘겨주자...
-                jsonArr.push({nickName : jsonUserNickName, comment: jsonCommentText, createdAt : jsonCreatAt});
+                //존재하나, comment는 없을 수 있다.
+                console.log(`userPosterId : ${userPoster.id}`);
 
-                res.status(200).json(jsonArr);
+                const comment = await Comment.findOne({
+                    where:{
+                        userPosterId : userPoster.id
+                    }
+                });
+                
+                if(comment === null){
+                    //이미 전에 지웠던 경험... 다시 생성
+                    await Comment.create({
+                        userPosterId : userPoster.id,
+                        comment : text
+                    });
+
+                    res.status(200).json("success comment");
+                } else {
+
+                    //댓글이 존재한단 얘기는 이미 댓글을 썻다.
+                    res.status(300).json("already exists comment");
+                }
+
             }
-        }else{
-            console.log("안됐음스");
         }
     }catch(error){
         console.error(error);
         next(error);
-    }  
+    }
 }
 
 export const apiModify = (req,res)=>{
     console.log(req);
 }
 
-export const apiDelete = (req,res)=>{
-    console.log(req);
+export const apiDelete = async(req,res)=>{
+    const postTitle = req.body.postTitle.substring(5);
+    const userId = req.user.id;
+
+    try{
+        const posts = await Poster.findOne({
+            attribute : ["id"],
+            where:{title : postTitle}
+        });
+
+        let posterId = posts.id;
+
+        const userPost = await UserPoster.find({
+            attribute:["id"],
+            where:{
+                userId : userId,
+                posterId : posterId
+            }
+        });
+
+        if(userPost.id === null){
+            //userpost가 없다면
+            res.status(205).json("userPoster가 없음");
+        }else{
+            const comment = await Comment.findOne({
+                attribute : ["id"],
+                where:{
+                    userPosterId : userPost.id
+                }
+            });
+
+            if(comment === null){
+                res.status(205).json("comment가 없다");
+            }else{
+                await Comment.destroy({
+                    where:{
+                        id : comment.id
+                    }
+                });
+
+                res.status(200).json("success");
+            }
+        }
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
 }
