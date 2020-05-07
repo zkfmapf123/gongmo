@@ -3,10 +3,7 @@
         a#home
         .header_column
             a.homeIcon(href=routers.home)
-                |GONGMOJOA
-            form#search
-                input(type="text")
-                input(type="submit" value="검색")    
+                |GONGMOJOA   
         .header_column
             //검색창 고민 중
         .header_column
@@ -41,20 +38,21 @@
                     li
                         a.logout(href=routers.logout) 로그아웃
                     li     
-                        a.userDetail(href=`/user/${user.email}`) 유저정보
+                        a.userDetail(href=`/user/${user.email}`) 찜한 목록
                     li 
                         a.analHand(href=`/anal/total`) 맞춤 공모전/장학금 보기
             .advertisement
                 image#advertiseImage(src="/advertise/ad.PNG" alt= "광고" )
             
     script.
-        const imageEvent = document.getElementById("advertiseImage");
+        const image = document.getElementById("advertiseImage");
 
-        imageEvent.addEventListener("click",(e)=>{
-            e.preventDefault();
+            const imageChange = () =>{
 
-            let ad = ["/advertise/ad.PNG","/advertise/ad2.PNG","/advertise/ad3.PNG"];
-            const RANDOM_NUMBER = Math.floor(Math.random() * 3);
+                let ad = ["/advertise/ad.PNG","/advertise/ad2.PNG","/advertise/ad3.PNG"];
+                const RANDOM_NUMBER = Math.floor(Math.random() * 3);
 
-            imageEvent.src = ad[RANDOM_NUMBER];
-        })
+                image.src = ad[RANDOM_NUMBER];
+            };
+
+            setInterval(imageChange,3000);           

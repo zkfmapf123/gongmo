@@ -3,22 +3,22 @@ extends layouts/main
 block content
     .user_container
         .user_column
-            div
+            //div
                 label 이메일
                 span#email
-            div
+            //div
                 label 닉네임
                 span#nickName
-            div
+            //div
                 label 대상
                 span#target
-            div
+            //div
                 label 거주지역
                 span#livesCity
-            div
+            //div
                 label 자기소개
                 span#comment
-            div
+            //div
                 form#userDetail
                     button(type="submit") 유저 조회
                 form(action=`/user/${user.email}/modify` method="get")
@@ -26,11 +26,22 @@ block content
                 form#userDelete
                     button(type="submit") 유저 삭제
         .user_column
-            h1 찜한 목록
-            h3= favorite
+            h3#title ▶ 찜한목록 총 #{favorite} 건
+            table
+                tr
+                    th 제목
+                    th 기간
+                    th 분류
+                    th 대상
+                    th 
                 for item in favoritePoster
-                    ul
-                        a(href=`/view/post/${item.id}`)
-                            li 
-                                h5= `제목 : ${item.title}`
-                                h5= `기간 : ${item.period}`
+                    a(href=`/view/post/${item.id}`)
+                        tr
+                            td.itemTitle= `${item.title}`
+                            td= `${item.period}`
+                            td= `${item.separate}`
+                            td= `${item.target}`
+                            td.gogo
+                                a(href=`/view/post/${item.id}`) 바로가기
+
+                        //a(href=`/view/post/${item.id}`)

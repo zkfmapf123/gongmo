@@ -1,5 +1,5 @@
 import express from "express";
-import { apiPost, post, postDeatil } from "../controllers/viewController";
+import { apiPost, post, postDeatil, apiText } from "../controllers/viewController";
 import routers from "../ROUTERS";
 
 const viewRouter = express.Router();

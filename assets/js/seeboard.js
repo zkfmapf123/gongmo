@@ -12,13 +12,59 @@ const badNumber = document.getElementById("bad").innerText;
 const good = goodButton.addEventListener("click",(e)=>{
     e.preventDefault();
 
-    alert("좋아요 버튼");
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = () =>{
+        if(xhr.status === 200){
+            console.log(xhr.responseText);
+            window.location.reload();
+        }else if(xhr.status === 300){
+            console.log(xhr.responseText);
+            if(xhr.responseText === "1"){
+                alert("댓글을 먼저 작성하시길 바랍니다.");
+            }else{
+                alert("이미 평가한 항목입니다.");
+            }
+        }else{
+            console.log("에러");
+        }
+    }
+
+    xhr.open("post","/api/apiPoint");
+    xhr.setRequestHeader("Content-type","application/json");
+    xhr.send(JSON.stringify({
+        postTitle : seeboardPosterTitle.innerText,
+        method : 1
+    }));
 });
 
 const bad = badButton.addEventListener("click",(e)=>{
     e.preventDefault();
 
-    alert("싫어요 버튼");
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = () =>{
+        if(xhr.status === 200){
+            console.log(xhr.responseText);
+            window.location.reload();
+        }else if(xhr.status === 300){
+            console.log(xhr.responseText);
+            if(xhr.responseText === "1"){
+                alert("댓글을 먼저 작성하시길 바랍니다.");
+            }else{
+                alert("이미 평가한 항목입니다.");
+            }
+        }else{
+            console.log("에러");
+        }
+    }
+
+    xhr.open("post","/api/apiPoint");
+    xhr.setRequestHeader("Content-type","application/json");
+    xhr.send(JSON.stringify({
+        postTitle : seeboardPosterTitle.innerText,
+        method : 2
+    }));
 })
 
 const favorite = favoriteButton.addEventListener("click",(e)=>{

@@ -3,48 +3,55 @@ extends layouts/main
 block content
     .postDeatil_container
         .postDetail_column
-            if user
-                div 
-                    a#goodPoint(href="")
-                        i.far.fa-thumbs-up 좋아요
-                        span#good= `${posts.goodPoint}`
-                div
-                    a#badPoint(href="") 
-                        i.far.fa-thumbs-down 싫어요
-                        span#bad= `${posts.badPoint}`
-                div
-                    a#favorite(href="")
-                        i.far.fa-star 찜하기
-            else
-                div 
-                    i.far.fa-thumbs-up 좋아요
-                    span= `${posts.goodPoint}`
-                div
-                    i.far.fa-thumbs-down 싫어요
-                    span= `${posts.badPoint}`
-            div
-                a(href="#seeboard") 
-                    i.far.fa-comment 댓글 창 이동하기
         .postDetail_column
-            image(src=`${posts.imageUrl}` width=900 height= 800)
-            h3.postTitle= `제목 : ${posts.title}`
-            if posts.divide === 1
-                h3.postDivide= `분류 : 공모전`
-            else if posts.divide === 2
-                h3.postDivide= `분류 : 장학금`
-            else if posts.divide === 3
-                h3.postDivide= `분류 : 대외활동`
-            else    
-                h3.postDivide= `분류 : 기타`
-            h3.postTarget= `응모대상 : ${posts.target}`
-            h3.postAgency= `주최기관 : ${posts.agency}`
-            h3.postPeriod= `기간 : ${posts.period}`
-            h3.postAmount= `총 상금 : ${posts.amount}`
-            a(href=`${posts.link}`)
-                h3.postLink= `홈페이지 주소 : ${posts.link}`
-            h3.postText= ` 내용 : ${posts.text}`
-            h3.postCreateAt= `업데이트 날짜 : ${posts.createdAt}`
-            h3.postView= view
+            .column
+                image(src=`${posts.imageUrl}` width= 500 height= 500)
+            .column
+                h3.postTitle#postTitle= `제목 : ${posts.title}`
+                if posts.divide === 1
+                    h3.postDivide= `분류 : 공모전`
+                else if posts.divide === 2
+                    h3.postDivide= `분류 : 장학금`
+                else if posts.divide === 3
+                    h3.postDivide= `분류 : 대외활동`
+                else    
+                    h3.postDivide= `분류 : 기타`
+                h3.postTarget= `응모대상 : ${posts.target}`
+                h3.postAgency= `주최기관 : ${posts.agency}`
+                h3.postPeriod= `기간 : ${posts.period}`
+                h3.postAmount= `총 상금 : ${posts.amount}`
+                a(href=`${posts.link}` target="_blank" )
+                    h3.postLink= `해당 홈페이지로 이동하기`
+                .columnColumn
+                    if user
+                        div 
+                            a#goodPoint(href="")
+                                i.far.fa-thumbs-up
+                                span#good= `${posts.goodPoint}`
+                        div
+                            a#badPoint(href="") 
+                                i.far.fa-thumbs-down
+                                span#bad= `${posts.badPoint}`
+                        div
+                            a#favorite(href="")
+                                i.far.fa-star 
+                    else
+                        div 
+                            i.far.fa-thumbs-up 
+                            span= `${posts.goodPoint}`
+                        div
+                            i.far.fa-thumbs-down
+                            span= `${posts.badPoint}`
+                    div
+                        a(href="#seeboard") 
+                            i.far.fa-comment 댓글 창 이동하기
+        .postDetail_column
+                div.postText
+                    ul
+                        for item in text
+                            li= item
+                //h3.postCreateAt= `업데이트 날짜 : ${posts.createdAt}`
+                h3.postView= view
 
         .postDetail_column
             .seeboard_column
@@ -64,13 +71,8 @@ block content
             .seeboard_column
                 for item in comments
                     i.fas.fa-user
-                    span= item.nickName
+                    span.nick= item.nickName
                     h3= item.comment
                     p= item.createdAt
                     span
-                        a 수정
-                        a 삭제
                         a 신고
-
-
-                        

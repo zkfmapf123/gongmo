@@ -15,13 +15,13 @@ export const home = async(req,res,next)=>{
         const posts = await Poster.findAll({
             attribute : ["id","imageUrl","title","divide","separate","target","view","period"],
             order:[["view","desc"]],
-            limit : 3
+            limit : 5
         });
 
         const posts2 = await Poster.findAll({
             attribute : ["id, imageUrl","title","divide","separate","target","view","period"],
             order:[["created_at","desc"]],
-            limit : 3
+            limit : 5
         });
 
         //최근만들어진거 5~10개정도
@@ -86,4 +86,4 @@ export const postJoin = async(req,res,next)=>{
             next(error);
         }
     }
-}
+};

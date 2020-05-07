@@ -6,7 +6,7 @@
   "scripts": {
     "dev:server": "nodemon --exec babel-node app.js --delay 2",
     "dev:assets": "webpack --mode development -w",
-    "build:assets" : "WEBPACK_ENV=production webpack",
+    "build:assets": "WEBPACK_ENV=production webpack",
     "data:start": "babel-node dataCrawler.js"
   },
   "author": "",
@@ -31,6 +31,7 @@
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "helmet": "3.21.3",
     "morgan": "1.10.0",
+    "multer": "1.4.2",
     "mysql": "2.18.1",
     "mysql2": "2.1.0",
     "node-sass": "4.13.1",
@@ -41,6 +42,7 @@
     "puppeteer": "2.1.1",
     "sass-loader": "8.0.2",
     "sequelize": "4.44.4",
+    "socket.io": "2.3.0",
     "xlsx": "0.15.6"
   },
   "devDependencies": {

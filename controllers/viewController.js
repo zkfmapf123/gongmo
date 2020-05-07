@@ -72,7 +72,13 @@ export const postDeatil = async(req,res)=>{
                 });
             }
         }
-        res.render("postDetail",{posts,comments});
+        //text 가공
+        let text = posts.text.split("■");
+
+        for(let i=0; i<text.length; i++){
+            text[i] = `●` + text[i];
+        }
+        res.render("postDetail",{posts,text,comments});
 
     }catch(error){
         console.error(error);

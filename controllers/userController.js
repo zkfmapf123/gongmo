@@ -3,6 +3,7 @@ import routers from "../ROUTERS";
 
 export const userDetail = async(req,res,next)=>{
     const userId = req.user.id;
+    let sum=0;
     
     //찜한목록
     try{
@@ -16,9 +17,10 @@ export const userDetail = async(req,res,next)=>{
         });
 
         for(const[i] of userPoster.entries()){
-
+            
+            sum++;
             const posts = await Poster.findOne({
-                attribute : ["id","title","period"],
+                attribute : ["id","title","period","separate","target","link"],
                 where :{
                     id : userPoster[i].posterId
                 }
@@ -27,11 +29,14 @@ export const userDetail = async(req,res,next)=>{
             favoritePoster.push({
                 id : posts.id,
                 title : posts.title,
-                period : posts.period
+                period : posts.period,
+                separate : posts.separate,
+                target : posts.target,
+                link : posts.link
             });
         };
         
-        res.render("userDetail",{favoritePoster});
+        res.render("userDetail",{favoritePoster, favorite: sum});
 
     }catch(error){
         console.error(error);

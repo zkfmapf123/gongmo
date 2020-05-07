@@ -2,7 +2,7 @@
 const HOME = "/";
 const LOGIN = "/login";
 const JOIN = "/join";
-const SEARCH = "/search";
+const SEARCH = "/search";  /* 추후 */
 const LOGOUT = "/logout";
 
 //view
@@ -30,6 +30,7 @@ const SEEBOARD_DELETE = "/delete";
 const API = "/api";
 const API_POINT = "/apiPoint";
 const API_POINT_FAVORITE = "/apiFavorite";
+const API_TEXT = "/apiText";
 
 const routers = {
     //home
@@ -73,7 +74,8 @@ const routers = {
 
     api : API,
     apiPoint : API_POINT,
-    apiFavorite : API_POINT_FAVORITE
+    apiFavorite : API_POINT_FAVORITE,
+    apiText : API_TEXT
 };
 
 export default routers;

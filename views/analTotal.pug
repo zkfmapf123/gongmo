@@ -4,10 +4,7 @@ include layouts/mixin/postSimpleShowView
 block content
     .analContainer
         .analColumn
-            form(action=`/anal/total` method="post")
-                div
-                    label 검색내용 
-                        input(type="text" name="findTitle" placeholder="검색내용을 입력하세요") 
+            form(action=`/anal/total` method="post") 
                 div
                     label 대학생 
                         input(type="radio" name="target" value="1")

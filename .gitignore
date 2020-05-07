@@ -121,5 +121,8 @@ package-lock.json
 advertise/
 static/
 poster/
+chattingServer/
+src/
+csv/
 
 
