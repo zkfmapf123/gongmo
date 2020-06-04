@@ -1,0 +1,24 @@
+extends layouts/main
+
+block content
+    .board_container
+        .board_column
+            table#table
+                tr
+                    th 번호 
+                    th 제목
+                    th 글쓴이
+                    th 작성일자
+                    th 조회 수
+
+        .board_column
+            a#leftClick
+                i.fas.fa-chevron-left
+            a#rightClick
+                i.fas.fa-chevron-right
+        .board_column
+            form#findBoard
+                input#findContent(type="text" placeholder="찾을 닉네임을 적어주세요")
+                input(type="submit" value="찾기")
+            form(action=`/board/create` method="get")
+                input(type="submit" value="글 작성하기")

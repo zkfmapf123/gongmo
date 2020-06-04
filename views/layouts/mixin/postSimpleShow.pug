@@ -1,8 +1,8 @@
 mixin postSimpleShow(post={})
     .postSimpleColumn_1
         a(href=`/view/post/${post.id}`)
-            image.simple(src=`${post.imageUrl}` width= 200 height= 400)     
-            .overlay
+            image.simple(src=`${post.imageUrl}` width= 200 height= 400)  
+            .overlay  
                 h4.simpleTitle= post.title
                 h4.simpleDivide= post.divide
                 h4.simpleSepareate= post.separate

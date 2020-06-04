@@ -1,0 +1,16 @@
+extends layouts/main
+
+block content
+    .create_container
+        .create_column
+            //h3 작성자 #{userNickName}
+            form(action=`/board/create` id="form" method="post")
+                select(name="separate")
+                        option(value="문의/질문") 문의/질문
+                        option(value="홍보") 홍보
+                        option(value="오류제보") 오류제보
+                        option(value="아이디어 공유 / 제안") 아이디어 공유/제안
+                        option(value="기타") 기타
+                input(type="text" name="title" placeholder="제목을 입력해 주세요" required=true)
+                textarea(name="content" form="form" cols="40" rows="10" autofocus wrap="hard" placeholder="내용을 입력해주세요" )
+                input(type="submit" value="글 작성하기")

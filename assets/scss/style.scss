@@ -13,6 +13,11 @@
 @import "./pages/postDetail.scss";
 @import "./pages/userDetail.scss";
 @import "./pages/post.scss";
+@import "./pages/find.scss";
+@import "./pages/analTotal.scss";
+@import "./pages/board.scss";
+@import "./pages/boardCreate.scss";
+@import "./pages/boardDetail.scss";
 
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -47,6 +52,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	margin-left: 5%;
+	margin-right: 5%;
 }
 ol, ul {
 	list-style: none;
@@ -68,4 +75,9 @@ body{
 	font-family: '맑은 고딕','malgun gothic';
 	font-weight: 300;
 	background-color: #f7f1e3;
+}
+
+head{
+	margin-right: 5%;
+	margin-left: 5%;
 }

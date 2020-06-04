@@ -2,7 +2,7 @@
     
     text-align: center;
     .user_column{
-        margin : 10px 200px 10px 200px;
+        margin : 10px 180px 10px 180px;
     }
 /*
     .user_column:nth-child(1){ //유저
@@ -41,6 +41,7 @@
         }
         
         table{
+            width: 100%;
             margin-top : 10px;
             margin-bottom: 10px;
             border-top : 3px solid rgba(0,0,0,0.2);
@@ -56,25 +57,25 @@
                 td{
                     padding-top : 20px;
                     padding-bottom : 20px;
+                    padding-right: 10px;
                     width: 300px;
                 }
 
                 .itemTitle{
-                    font-weight: 1000;
-                    color : green;
-                }
-
-                .gogo{
-                    cursor : pointer;
-                    color : blue;
-                    
                     a{
                         text-decoration: none;
+                        color : green;
+                        font-weight: 400;
+                        cursor: pointer;
                     }
                 }
-            }
 
-            
-        }
+                .itemTime{
+                    color : #eb2f06;
+                    font-size : 25px;
+                    font-weight: 400;
+                }
+            }
+        }        
     }
 }

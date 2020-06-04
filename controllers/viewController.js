@@ -1,4 +1,5 @@
 import { Poster, UserPoster, Comment, User } from "../models";
+import routers from "../ROUTERS";
 
 export const apiPost = async(req,res,next)=>{
     res.render("post");
@@ -12,6 +13,7 @@ export const postDeatil = async(req,res)=>{
         const posts = await Poster.findOne({
             where : {id : postId}
         });
+
     
         if(posts){
             console.log(posts.view);
@@ -63,12 +65,14 @@ export const postDeatil = async(req,res)=>{
                 console.log("null");
             } else {
 
-                let time = commentInformation.createdAt.toString().split("T");
-                //comments.push 해주면된다.
+                //const time = getTime(commentInformation.createdAt.toString());
+                //console.log(time);
+                const time = "시간 구해야하오..."
+                
                 comments.push({
                     nickName: nickName.nickName,
                     comment: commentInformation.comment,
-                    createdAt: time[0]
+                    time: time
                 });
             }
         }
@@ -78,7 +82,10 @@ export const postDeatil = async(req,res)=>{
         for(let i=0; i<text.length; i++){
             text[i] = `●` + text[i];
         }
-        res.render("postDetail",{posts,text,comments});
+
+        const D_day = dayCalcuator(posts.period.split("~"));
+        
+        res.render("postDetail",{posts,text,comments,Day:D_day});
 
     }catch(error){
         console.error(error);
@@ -109,5 +116,30 @@ export const post = async(req,res,next)=>{
     }catch(error){
         console.error(error);
         next(error);
+    }
+}
+
+export const getTime = (time)=>{
+    //시간구하기스...
+}
+
+export const dayCalcuator = (index) =>{
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth()+1;
+    const date = today.getDate();
+    
+    const num = index[1].split("-");
+    const date1 = new Date(num[0],num[1],num[2]);
+    const date2 = new Date(year,month,date);
+
+    const btMs = date2.getTime() - date1.getTime();
+    let dday = btMs/(1000*60*60*24);
+
+    if(dday > 0){
+        return `+${dday}`;
+    }else{
+        return dday;
     }
 }

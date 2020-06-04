@@ -1,0 +1,10 @@
+extends layouts/main
+
+block content
+    .create_container
+        .create_column
+            //h3= `작성자 ${board.userNickName}`
+            form(action=`/board/${board.id}/update` id="form" method="post")
+                input(type="text" name="title" placeholder=`${board.title}` required=true)
+                textarea(name="content" form="form" cols="40" rows="10" autofocus wrap="hard" placeholder=`${board.content}` )
+                input(type="submit" value="글 수정하기")

@@ -33,15 +33,15 @@ block content
                     th 기간
                     th 분류
                     th 대상
-                    th 
+                    th 남은기간
                 for item in favoritePoster
                     a(href=`/view/post/${item.id}`)
                         tr
-                            td.itemTitle= `${item.title}`
+                            td.itemTitle
+                                a(href=`/view/post/${item.id}`)= `${item.title}`
                             td= `${item.period}`
                             td= `${item.separate}`
                             td= `${item.target}`
-                            td.gogo
-                                a(href=`/view/post/${item.id}`) 바로가기
+                            td.itemTime= `D${item.d_day}`
 
                         //a(href=`/view/post/${item.id}`)

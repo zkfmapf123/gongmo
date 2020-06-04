@@ -34,7 +34,8 @@ export const apiCreate = async(req,res,next)=>{
                 await UserPoster.create({
                     userId : userId,
                     posterId : posterId,
-                    favorite : false
+                    favorite : false,
+                    thumbsCount : false
                 });
             
                 //comment를 만든다

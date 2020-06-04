@@ -1,5 +1,6 @@
 import {User, UserPoster, Poster, Comment,} from "../models";
 import routers from "../ROUTERS";
+import { dayCalcuator } from "./viewController";
 
 export const userDetail = async(req,res,next)=>{
     const userId = req.user.id;
@@ -26,13 +27,16 @@ export const userDetail = async(req,res,next)=>{
                 }
             });
 
+            const d_day = dayCalcuator(posts.period.split("~"));
+
             favoritePoster.push({
                 id : posts.id,
                 title : posts.title,
                 period : posts.period,
                 separate : posts.separate,
                 target : posts.target,
-                link : posts.link
+                link : posts.link,
+                d_day : d_day
             });
         };
         

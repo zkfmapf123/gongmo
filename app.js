@@ -10,13 +10,14 @@ import homeRouter from "./routers/homeRouter";
 import viewRouter from "./routers/viewRouter";
 import analRouter from "./routers/analRouter";
 import userRouter from "./routers/userRouter";
-import { localsMiddleware } from "./localsMiddleware";
+import { localsMiddleware} from "./localsMiddleware";
 import { sequelize } from "./models";
 import MYSQLStore from "express-mysql-session";
 import passport from "passport";
 import passportConfig from "./passport";
 import seeboardRouter from "./routers/seeboardRouter";
 import apiRouter from "./routers/apiRouter";
+import boardRouter from "./routers/boardRouter";
 
 dotenv.config();
 const app = express();
@@ -64,6 +65,7 @@ app.use(routers.view,viewRouter);
 app.use(routers.anal,analRouter);
 app.use(routers.user,userRouter);
 app.use(routers.seeboard,seeboardRouter);
+app.use(routers.board,boardRouter);
 app.use(routers.api,apiRouter);
 
 //init

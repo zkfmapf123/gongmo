@@ -1,0 +1,32 @@
+extends layouts/main
+
+block content
+    .boardDetail_container
+        .boardDetail_column
+            h3= `${board.userNickName} 의 게시글 입니다.`
+            span= `${board.createdAt}`
+            span= `조회수 ${board.view}`
+        .boardDetail_column
+            h3#title= `${board.title}`
+            h3#content= `${board.content}`
+        .boardDetail_column
+            h3#commentCount 
+            if flag
+                form(action=`/board/${board.id}/update` method="get")
+                    input(type="submit" value="글 수정하기")
+                form(action=`/board/${board.id}/delete` method="post")
+                    input(type="submit" value="글 삭제하기")
+        .boardDetail_column
+            if flag2
+                .commentMain
+                    //i.fas.fa-user
+                    form#commentCreate
+                        input#commentContent(type="text" placeholder="댓글을 등록하세요")
+                        input(type="submit" value="댓글 작성")
+            else
+                .commentMain
+                    //i.fas.fa-user
+                    h3 Guest는 댓글을 작성 할 수 없습니다.
+        .boardDetail_column
+            table#commentsResult
+                

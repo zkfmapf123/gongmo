@@ -1,6 +1,8 @@
 import routers from "../ROUTERS";
 import bcrypt from "bcrypt"
-import { User, Poster } from "../models";
+import { User, Poster, UserPoster, Comment } from "../models";
+import fs from "fs";
+import path from "path";
 
 export const home = async(req,res,next)=>{
     //지정된 시간에 session 다 지우자...
@@ -8,9 +10,6 @@ export const home = async(req,res,next)=>{
     else console.log(`req.user : ${req.isAuthenticated()}`);
 
     try{
-        //일단은 전체적인 것만 나오게끔하자...
-        //const posts = await Poster.findAll({});
-
         //view 높은거 5~10개정도
         const posts = await Poster.findAll({
             attribute : ["id","imageUrl","title","divide","separate","target","view","period"],
@@ -23,6 +22,13 @@ export const home = async(req,res,next)=>{
             order:[["created_at","desc"]],
             limit : 5
         });
+
+        const posts3 = await Poster.findAll({
+            attribute : ["id","period"],
+            order : [["created_at","asc"]]
+        });
+
+        deletePoster(posts3);
 
         //최근만들어진거 5~10개정도
         if(posts) res.render("home",{posts, posts2});
@@ -87,3 +93,151 @@ export const postJoin = async(req,res,next)=>{
         }
     }
 };
+
+export const find = (req,res) =>{
+    res.render("find");
+};
+
+export const postFind= async(req,res)=>{
+    let method;
+    let nickName;
+    let email;
+
+    method = req.body.method;
+    
+    if(method === "id"){
+        nickName = req.body.nickName;
+        
+        try{
+            const user = await User.findOne({
+                where : {nickName : nickName}
+            });
+
+            if(user){
+                res.status(200).json(user.email);
+            }else{
+                res.status(404).json("not Found");
+            }
+        }catch(error){
+            console.error(error);
+        }
+    }else{
+        nickName = req.body.nickName;
+        email = req.body.email;
+
+        try{
+            const user = await User.findOne({
+                where : {
+                    email : email,
+                    nickName : nickName
+                }
+            });
+
+            if(user){
+                res.status(200).json("성공");
+            }else{
+                res.status(400).json("실패");
+            }
+        }catch(error){
+            console.error(error);
+        }
+    };
+};
+
+export const apiFind = async(req,res,next) =>{
+    try{
+        const email = req.body.email;
+        const password = await bcrypt.hash(req.body.password,12);
+        await User.update({
+            password : password},{
+                where : {
+                    email : email}
+            })
+        res.status(200).json("성공");
+    }catch(error){
+        console.error(error);
+        next();
+    };
+};
+
+export const apiAdvertisement = async(req,res,next)=>{
+    try{
+        fs.readdir("poster",(err,files)=>{
+            if(err) throw err;
+
+            res.status(200).json(files);
+        })
+    }catch(error){
+        console.error(error);
+        next();
+    }
+}
+
+//효과적이지 않은 로직임...
+const deletePoster = async(poster)=>{
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth()+1;
+    let date = today.getDate()-3;
+    
+    if(month<10) month = `0${month}`;
+    if(date<10) date = `0${date}`;
+
+    let todayTime = `${year}-${month}-${date}`;
+
+    try{
+        for(const[i] of poster.entries()){
+            let posterId = poster[i].id;
+            let period = poster[i].period.split("~")[1].trim();
+            //console.log(poster[i].id);
+            if(period === todayTime || period < todayTime){
+                const userPoster = await UserPoster.findAll({
+                    attribute:["id","userId","posterId"],
+                    where:{
+                        posterId : poster[i].id
+                    }
+                });
+
+                //comment 지우고
+                for(const[j] of userPoster.entries()){
+
+                    await Comment.destroy({
+                        where:{
+                            userPosterId : userPoster[j].id
+                        }
+                    });
+                };
+
+                //userPoster 지우고
+                for(const[j] of userPoster.entries()){
+                    await UserPoster.destroy({
+                        where:{
+                            posterId : poster[i].id
+                        }
+                    });
+                };
+
+                try{
+                    fs.statSync(`${poster[i].imageUrl}`);
+                    fs.unlinkSync(`../crawler${poster[i].imageUrl}`);
+                    console.log("delete");
+                }catch(error){
+                    console.error(error);
+                    console.log("파일존재하지않음");
+                }
+
+                //포스터파일 지우기
+                await Poster.destroy({
+                    where:{
+                        id : posterId
+                    }
+                });
+                
+            }
+        }
+    }catch(error){
+        console.error(error);
+
+    }
+}

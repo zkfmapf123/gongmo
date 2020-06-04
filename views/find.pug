@@ -1,0 +1,96 @@
+extends layouts/main
+
+block content
+    .find_container
+        .find_column
+            form#idFind
+                div
+                    input#idNickName(type="text" placeholder="닉네임을 입력하세요" required=true)
+                div
+                    input(type="submit" value="아이디 찾기")
+        .find_column
+            form#pwFind
+                div
+                    input#pwEmail(type="text" placeholder="아이디를 입력하세요" required=true)
+                div
+                    input#pwNickName(type="text" placeholder="닉네임을 입력하세요" required=true)
+                div
+                    input(type="submit" value="비밀번호 찾기")
+    script.
+        const idFind = document.getElementById("idFind");
+        const pwFind = document.getElementById("pwFind");
+
+        pwFind.addEventListener("submit",(e)=>{
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = ()=>{
+                if(xhr.status === 200){
+                    password();
+                }else{
+                    alert("해당하는 계정이 존재하지 않습니다.")
+                }
+            }
+
+            xhr.open("post","/find");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                nickName : document.getElementById("pwNickName").value,
+                email : document.getElementById("pwEmail").value,
+                method : "pw"
+            }));
+        })
+
+        idFind.addEventListener("submit",(e)=>{
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload= () =>{
+                if(xhr.status===200){
+                    const email = xhr.responseText;
+                    alert(email);
+                }else{
+                    console.log(xhr.responseText);
+                    alert("해당하는 이메일이 없습니다");
+                }
+            }
+
+            xhr.open("post","/find");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                nickName : document.getElementById("idNickName").value,
+                method : "id"
+            }));
+        });
+
+        const password = ()=>{
+            const password1 = prompt("지정할 비밀번호를 입력하세요");
+            const password2 = prompt("비밀번호를 다시 입력해 주세요");
+
+            if(password1 !== password2){
+                alert("두 비밀번호가 같지 않습니다.")
+            }else{
+                if(password1.indexOf("<") != -1){
+                    alert("특수문자 금지");
+                }else{
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.onload = () =>{
+                        if(xhr.status === 200){
+                            location.href="/";
+                        }else{
+                            console.log(xhr.responseText);
+                        }
+                    };
+
+                    xhr.open("post","api/find");
+                    xhr.setRequestHeader("Content-type","application/json");
+                    xhr.send(JSON.stringify({
+                        email : document.getElementById("pwEmail").value, 
+                        password : password1
+                    }));
+                }
+            }
+        }

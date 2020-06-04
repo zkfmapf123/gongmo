@@ -21,6 +21,7 @@
     "bcrypt": "4.0.1",
     "body-parser": "1.19.0",
     "cookie-parser": "1.4.5",
+    "cors": "2.8.5",
     "css-loader": "3.5.2",
     "csv-parse": "4.8.8",
     "csv-stringify": "5.3.6",

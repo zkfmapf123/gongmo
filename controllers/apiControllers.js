@@ -31,7 +31,7 @@ export const apiPostPoint = async(req,res,next)=>{
             res.status(300).json(1);
         }
         // 유저테이블이 있는데, 이미 한 경우
-        else if(userPoster.thumbsCount === false){
+        else if(userPoster.thumbsCount === true){
             res.status(300).json(2);
         }else{
             //userPoster thumbsCount 바꾸고
@@ -40,7 +40,7 @@ export const apiPostPoint = async(req,res,next)=>{
             //좋아용버튼
             console.log(poster.id);
             await UserPoster.update({
-                thumbsCount : false},{
+                thumbsCount : true},{
                     where:{
                         userId : userId,
                         posterId : poster.id
@@ -55,7 +55,7 @@ export const apiPostPoint = async(req,res,next)=>{
             //실허용버튼
             console.log(poster.id);
             await UserPoster.update({
-                thumbsCount : false},{
+                thumbsCount : true},{
                     where:{
                         userId : userId,
                         posterId : poster.id
@@ -104,10 +104,9 @@ export const apiPostFavortie = async(req,res,next)=>{
             console.log(`thumbsCount : ${userPoster.thumbsCount}`);
             console.log(`favorite : ${userPoster.favorite}`);
             
-            if(userPoster.thumbsCount === true){
+            if(userPoster.favorite === false){
                 //찜목록을 할경우
                 await UserPoster.update({
-                    thumbsCount : false,
                     favorite : true},{
                         where:{
                             userId : userId,
@@ -117,14 +116,15 @@ export const apiPostFavortie = async(req,res,next)=>{
                 res.status(200).json("success favorite");
             }else{
                 //이미 찜 목록에 담은경우
+
                 await UserPoster.update({
-                    thumbsCount : true,
                     favorite : false},{
                         where:{
                             userId : userId,
                             posterId : posterId
                         }
                     });
+                    
                 res.status(205).json("cancle favorite");
             }
         }

@@ -5,14 +5,21 @@ import fs from "fs";
 import axios from "axios";
 import { Poster } from "./models";
 
+if(fs.readFileSync('csv/result.csv')){
+    fs.unlink(`csv/result.csv`,(err)=>{
+        if(err) throw err;
+        console.log("delete result");
+    })
+}
 const csv = fs.readFileSync(`csv/data.csv`);
 const records = parse(csv.toString("utf-8"));
 
 const cralwer = async()=>{
     try{
         const result = [];
-        const browser = await puppeteer.launch({ headless: false});
+        const browser = await puppeteer.launch({ headless: true});
         const page = await browser.newPage();
+        await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36");
         await page.setViewport({ width : 1280, height: 960});
 
         for(const[i,r] of records.entries()){
@@ -126,12 +133,13 @@ const saveDatabase = async () => {
             const randomUrl = dbs[i][9];
 
             //  1: 공모전
-            //  2: 장학금
+            //  2: 봉사활동 취업으로할까...
             //  3: 대외활동
             //  4: 기타..
 
             //test용
-            const randomNum = Math.floor(Math.random() * (3-0+1) + 1);
+            //const randomNum = Math.floor(Math.random() * (3-0+1) + 1);
+            const randomNum = 2;
             //db에 넣기
             await Poster.create({
                 title: postTitle,

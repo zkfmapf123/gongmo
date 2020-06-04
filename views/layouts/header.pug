@@ -3,7 +3,7 @@
         a#home
         .header_column
             a.homeIcon(href=routers.home)
-                |GONGMOJOA   
+                |GONGMOJOA
         .header_column
             //검색창 고민 중
         .header_column
@@ -16,13 +16,13 @@
                         input(type="submit" value="대외활동" name="name")
                 li
                     form(action=`/view/post` method="get")
-                        input(type="submit" value="장학금"  name="name")
+                        input(type="submit" value="봉사활동"  name="name")
                 li
                     form(action=`/view/post` method="get")
-                        input(type="submit" value="기타"  name="name") 
+                        input(type="submit" value="기타"  name="name")
                 li
-                    form()
-                        input(type="submit" value="오픈채팅방")
+                    form(action="/board" method="get")
+                        input(type="submit" value="게시판" name="seeboard")
         .header_columm.sideBar
             ul
                 if !user
@@ -42,17 +42,14 @@
                     li 
                         a.analHand(href=`/anal/total`) 맞춤 공모전/장학금 보기
             .advertisement
-                image#advertiseImage(src="/advertise/ad.PNG" alt= "광고" )
-            
+                image(src="/advertise/ad.PNG")#advertiseImage        
     script.
         const image = document.getElementById("advertiseImage");
-
-            const imageChange = () =>{
-
-                let ad = ["/advertise/ad.PNG","/advertise/ad2.PNG","/advertise/ad3.PNG"];
-                const RANDOM_NUMBER = Math.floor(Math.random() * 3);
-
-                image.src = ad[RANDOM_NUMBER];
-            };
-
-            setInterval(imageChange,3000);           
+        let ad = ["/advertise/ad.PNG","/advertise/ad2.PNG","/advertise/ad3.PNG"];
+            
+        const imageChange = () =>{
+            const RANDOM_NUMBER = Math.floor(Math.random() * 3);
+            image.src = ad[RANDOM_NUMBER];
+        };
+        
+        setInterval(imageChange,3000);           

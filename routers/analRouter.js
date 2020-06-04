@@ -1,11 +1,12 @@
 import express from "express";
 import routers from "../ROUTERS";
-import {getAnalTotal, postAnalTotal } from "../controllers/analControllers";
+import {analTotal, analNormal, postAnalSelect, sortSelect } from "../controllers/analControllers";
 
 const analRouter = express.Router();
 
 analRouter.get(routers.home,(req,res)=>res.send("anal"));
-analRouter.get(routers.analTotal,getAnalTotal);
-analRouter.post(routers.analTotal,postAnalTotal);
+analRouter.get(routers.analTotal,analTotal);
+analRouter.post(routers.analNormal,analNormal);
+analRouter.post(routers.analNormal,postAnalSelect);
 
 export default analRouter;

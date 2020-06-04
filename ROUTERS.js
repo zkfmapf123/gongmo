@@ -3,7 +3,9 @@ const HOME = "/";
 const LOGIN = "/login";
 const JOIN = "/join";
 const SEARCH = "/search";  /* 추후 */
+const FIND = "/find";
 const LOGOUT = "/logout";
+const API_FIND= "/api/find";
 
 //view
 const VIEW = "/view";
@@ -18,6 +20,7 @@ const USER_DELETE = "/:id/delete";
 
 //analysis
 const ANAL = "/anal";
+const ANAL_NORMAL = "/normal";
 const ANAL_TOTAL = "/total";
 
 //seeboard
@@ -25,6 +28,16 @@ const SEEBOARD = "/seeboard";
 const SEEBOARD_CREATE = "/create";
 const SEEBOARD_MODIFY = "/modify";
 const SEEBOARD_DELETE = "/delete";
+
+//board
+const BOARD = "/board";
+const BOARD_CREATE = "/create";
+const BOARD_DETAIL = "/:id";
+const BOARD_UPDATE = "/:id/update";
+const BOARD_DELETE = "/:id/delete";
+const BOARD_FIND = "/find";
+const BOARD_COMMENT = "/comments";
+const BOARD_COMMENT_VIEW = "/comments/view";
 
 //api
 const API = "/api";
@@ -39,7 +52,9 @@ const routers = {
     join : JOIN,
     search : SEARCH,
     logout : LOGOUT,
-
+    find : FIND,
+    apiFind : API_FIND,
+    
     //view
     view : VIEW,
     post : POST,
@@ -65,12 +80,34 @@ const routers = {
     
     //anal
     anal : ANAL,
+    analNormal : ANAL_NORMAL,
     analTotal : ANAL_TOTAL,
 
     seeboard : SEEBOARD,
     seeboardCreate : SEEBOARD_CREATE,
     seeboardModify : SEEBOARD_MODIFY,
     seeboardDelete : SEEBOARD_DELETE,
+
+    board : BOARD,
+    boardDetail : (id)=>{
+        if(id) return `/board/${id}`;
+        else return BOARD_DETAIL;
+    },
+
+    boardCreate : BOARD_CREATE,
+
+    boardUpdate : (id) =>{
+        if(id) return `/board/${id}/update`;
+        else return BOARD_UPDATE
+    },
+
+    boardDelete : (id) =>{
+        if(id) return `/board/${id}/delete`;
+        else return BOARD_DELETE
+    },
+    boardComments : BOARD_COMMENT,
+    boardFind : BOARD_FIND,
+    boardCommentsView : BOARD_COMMENT_VIEW,
 
     api : API,
     apiPoint : API_POINT,

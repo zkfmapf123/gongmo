@@ -1,17 +1,17 @@
 extends layouts/main
 
 block content
-    .postDeatil_container
+    .postDeatil_container#postDetail_container
         .postDetail_column
         .postDetail_column
             .column
                 image(src=`${posts.imageUrl}` width= 500 height= 500)
-            .column
+            .column 
                 h3.postTitle#postTitle= `제목 : ${posts.title}`
                 if posts.divide === 1
                     h3.postDivide= `분류 : 공모전`
                 else if posts.divide === 2
-                    h3.postDivide= `분류 : 장학금`
+                    h3.postDivide= `분류 : 봉사활동`
                 else if posts.divide === 3
                     h3.postDivide= `분류 : 대외활동`
                 else    
@@ -19,9 +19,11 @@ block content
                 h3.postTarget= `응모대상 : ${posts.target}`
                 h3.postAgency= `주최기관 : ${posts.agency}`
                 h3.postPeriod= `기간 : ${posts.period}`
+                    span.postD D
+                    span.postDay#postDay #{Day}
                 h3.postAmount= `총 상금 : ${posts.amount}`
                 a(href=`${posts.link}` target="_blank" )
-                    h3.postLink= `해당 홈페이지로 이동하기`
+                    h3.postLink= posts.link  
                 .columnColumn
                     if user
                         div 
@@ -61,7 +63,7 @@ block content
                             i.fas.fa-user
                             h4#userNickName= user.nickName
                         div
-                            textarea(id= "seeboardText" name="comment" cols="100", row="300" placeholder="의견을 적어주세요")
+                            textarea(id= "seeboardText" name="comment" placeholder="의견을 적어주세요")
                         button(type="submit") 글 쓰기
                     form#seeboardFormInUserDelete
                         button(type="submit") 글 삭제하기
@@ -69,10 +71,178 @@ block content
                     span= `Guest는 댓글에 참여 할 수 없습니다.`
                 a#seeboard
             .seeboard_column
-                for item in comments
-                    i.fas.fa-user
-                    span.nick= item.nickName
-                    h3= item.comment
-                    p= item.createdAt
-                    span
-                        a 신고
+                    for item in comments
+                        div
+                            i.fas.fa-user
+                            span.nick= item.nickName
+                            span.comment= item.comment
+                            span.time= item.time
+    script.
+        const day = document.getElementById("postDay");
+        const container = document.getElementById("postDetail_container");
+
+        if(day.innerText > 0){
+            alert("해당 공모전은 기한이 지났습니다.")
+            container.style.opacity = 0.5;
+        }
+
+        const seeboardFormInUser = document.getElementById("seeboardFormInUser");
+        const seeboardText = document.getElementById("seeboardText"); //게시글
+        const seeboardPosterTitle = document.querySelector(".postDetail_column h3");
+        const seeboardFormInUserDelete = document.getElementById("seeboardFormInUserDelete");
+
+        const goodButton = document.getElementById("goodPoint");
+        const badButton = document.getElementById("badPoint");
+        const favoriteButton = document.getElementById("favorite");
+        const goodNumber = document.getElementById("good").innerText;
+        const badNumber = document.getElementById("bad").innerText;
+
+        goodButton.addEventListener("click",(e)=>{
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = () =>{
+                if(xhr.status === 200){
+                    console.log(xhr.responseText);
+                    window.location.reload();
+                }else if(xhr.status === 300){
+                    console.log(xhr.responseText);
+                    if(xhr.responseText === "1"){
+                        alert("댓글을 먼저 작성하시길 바랍니다.");
+                    }else{
+                        alert("이미 평가한 항목입니다.");
+                    }
+                }else{
+                    console.log("에러");
+                }
+            }
+
+            xhr.open("post","/api/apiPoint");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                postTitle : seeboardPosterTitle.innerText,
+                method : 1
+            }));
+        });
+
+        //실허요 버튼
+        badButton.addEventListener("click",(e)=>{
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = () =>{
+                if(xhr.status === 200){
+                    console.log(xhr.responseText);
+                    window.location.reload();
+                }else if(xhr.status === 300){
+                    console.log(xhr.responseText);
+                    if(xhr.responseText === "1"){
+                        alert("댓글을 먼저 작성하시길 바랍니다.");
+                    }else{
+                        alert("이미 평가한 항목입니다.");
+                    }
+                }else{
+                    console.log("에러");
+                }
+            }
+
+            xhr.open("post","/api/apiPoint");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                postTitle : seeboardPosterTitle.innerText,
+                method : 2
+            }));
+        })
+        
+        //찜하기 버튼
+        favoriteButton.addEventListener("click",(e)=>{
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = ()=>{
+                if(xhr.status === 200){
+                    console.log(xhr.statusText);
+
+                    alert("찜 하기 목록에 추가되었습니다.");
+                }else if(xhr.status === 205){
+                    alert("찜 하기 목록이 취소되었습니다. ");
+                }else{
+                    alert("댓글 작성 후 가능합니다.");
+                }
+            }
+
+            xhr.open("post","/api/apiFavorite");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                postTitle : seeboardPosterTitle.innerText
+            }));
+        })
+
+        /*                  유저 시 : 글 새로만들기                 */
+        seeboardFormInUser.addEventListener("submit",(e)=>{
+            e.preventDefault();
+
+            //정리
+            const text = seeboardText.value;
+            const postTitle = seeboardPosterTitle.innerText;
+
+            console.log(`postTitle : ${postTitle} seeboardText : ${text}`);
+
+            const xhr = new XMLHttpRequest();
+
+            //보내기
+            xhr.onload = ()=>{
+                if(xhr.status===200){
+                    const comments = JSON.parse(xhr.responseText);
+                    console.log(comments);
+
+                    window.location.reload(); //새로고침
+
+                }else{
+                    alert("이미 기재한 댓글이 존재합니다.");
+                    seeboardText.value = "댓글은 한번만 기재가 가능합니다.";
+                }  
+            }
+
+
+            xhr.open("post",`/seeboard/create`);
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                postTitle : postTitle,
+                text : text,
+            }));
+        });
+
+        //유저 시 : 삭제기능
+        seeboardFormInUserDelete.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const up = confirm("댓글을 삭제하시겠습니까? ");
+
+            if (up) {
+                const postTitle = seeboardPosterTitle.innerText;
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+
+                        window.location.reload();
+                    } else {
+                        console.log(xhr.responseText);
+                        alert("삭제할 댓글이 없습니다.");
+                    }
+                }
+
+                xhr.open("post", "/seeboard/delete");
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify({
+                    postTitle: postTitle
+                }));
+            }
+        });
+
+        
