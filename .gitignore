@@ -115,14 +115,8 @@ dist
 .pnp.*
 
 .env
-config/
-models/
 package-lock.json
-advertise/
-static/
-poster/
-src/
-csv/
 *.log
+src/
 
 
