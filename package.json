@@ -16,7 +16,7 @@
     "stop": "pm2 stop app.js",
     "delete": "pm2 delete app.js",
     "logs": "pm2 logs",
-    "update" : "pm2 update"
+    "update": "pm2 update"
   },
   "author": "",
   "license": "ISC",
