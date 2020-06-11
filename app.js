@@ -46,21 +46,6 @@ app.use("/static",express.static("static"));
 app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(cookieParse());
-const sessionOption = {
-    resave: false,
-    saveUninitialized:false,
-    secret: process.env.SECRET_STRING,
-    cookie:{
-        httpOnly:true,
-        secure: false,
-    },
-    store: new RedisStore({
-        host: process.env.REDIS_HOST,
-        port : process.env.REDIS_PORT,
-        pass : process.env.REDIS_PASSWORD,
-        logErrors : true,
-    })
-};
 if(process.env.NODE_ENV === "production"){
     app.use(session({
         resave : false,
@@ -69,7 +54,7 @@ if(process.env.NODE_ENV === "production"){
         proxy : true,
         cookie :{
             httpOnly : true,
-            secure : true
+            secure : false
         },
     
         store : new RedisStore({
