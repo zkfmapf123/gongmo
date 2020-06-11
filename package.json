@@ -8,7 +8,7 @@
     "dev:assets": "webpack --mode development -w",
     "build:assets": "WEBPACK_ENV=production webpack",
     "data:start": "babel-node dataCrawler.js",
-    "start": "cross-env NODE_ENV=production PORT=80 babel-node app.js",
+    "start": "cross-env NODE_ENV=production babel-node app.js",
     "list": "pm2 list",
     "log": "pm2 log",
     "monit": "pm2 monit",
