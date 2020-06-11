@@ -67,7 +67,7 @@ export const postDeatil = async(req,res)=>{
 
                 //const time = getTime(commentInformation.createdAt.toString());
                 //console.log(time);
-                const time = "시간 구해야하오..."
+                const time = timeCalculator(commentInformation.createdAt.toString());
                 
                 comments.push({
                     nickName: nickName.nickName,
@@ -85,7 +85,9 @@ export const postDeatil = async(req,res)=>{
 
         const D_day = dayCalcuator(posts.period.split("~"));
         
-        res.render("postDetail",{posts,text,comments,Day:D_day});
+        res.set({
+            "Cache-Control" : "no-cache"
+        }).render("postDetail",{posts,text,comments,Day:D_day});
 
     }catch(error){
         console.error(error);
@@ -98,8 +100,8 @@ export const post = async(req,res,next)=>{
     
     let divideNumber;
     if(separate === "공모전") divideNumber = 1;
+    else if(separate === "봉사활동") divideNumber =2;
     else if(separate === "대외활동") divideNumber =3;
-    else if(separate === "장학금") divideNumber =2;
     else divideNumber =4;
 
     console.log(divideNumber);
@@ -111,8 +113,12 @@ export const post = async(req,res,next)=>{
             where : { divide : divideNumber}
         });
 
-        if(posts) res.render("post",{ posts });
-        else res.render("post", {posts : []})
+        if(posts) res.set({
+            "Cache-Control" : "no-cache"
+        }).render("post",{ posts });
+        else res.set({
+            "Cache-Control" : "no-cache"
+        }).render("post", {posts : []})
     }catch(error){
         console.error(error);
         next(error);
@@ -141,5 +147,52 @@ export const dayCalcuator = (index) =>{
         return `+${dday}`;
     }else{
         return dday;
+    }
+}
+
+export const timeCalculator = (index)=>{
+    let standardYear;
+    let standardMonth;
+    let standardDay;
+
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() +1;
+    let date = today.getDate();
+    if(month < 10) month = `0${month}`;
+    if(date < 10) date = `0${date}`;
+
+    const time = (index.split("GMT")[0]).split(" ");
+    switch(time[1])
+    {
+        case "Jan":standardMonth ="01"; break; 
+        case "Feb":standardMonth ="02"; break;
+        case "Mar":standardMonth ="03"; break;
+        case "Apr":standardMonth ="04"; break;
+        case "May":standardMonth ="05"; break;
+        case "Jun":standardMonth ="06"; break;
+        case "Jul":standardMonth ="07"; break;
+        case "Aug":standardMonth ="08"; break;
+        case "Sep":standardMonth ="09"; break;
+        case "Oct":standardMonth ="10"; break;
+        case "Nov":standardMonth ="11"; break;
+        case "Dec":standardMonth ="12"; break;
+    }
+    standardYear = time[3];
+    standardDay = time[2];
+
+    console.log(`${year}-${month}-${date}`);
+    console.log(`${standardYear}-${standardMonth}-${standardDay}`);
+
+    if(year.toString() === standardYear.toString()){
+        let monthData = (month-standardMonth)*30;
+        let dayDate = date-standardDay;
+
+        if(month.toString() === standardMonth.toString() && date.toString() === standardDay.toString()) return `오늘`;
+
+        return `${monthData + dayDate}일 전`;
+    }else{
+        let data = standardYear - year;
+        return `${data}년 전`;
     }
 }

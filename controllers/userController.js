@@ -40,7 +40,9 @@ export const userDetail = async(req,res,next)=>{
             });
         };
         
-        res.render("userDetail",{favoritePoster, favorite: sum});
+        res.set({
+            "Cache-Control" : "no-cache"
+        }).render("userDetail",{favoritePoster, favorite: sum});
 
     }catch(error){
         console.error(error);
@@ -48,6 +50,7 @@ export const userDetail = async(req,res,next)=>{
     }
 }
 
+/* 안쓰는 로직 */
 export const apiUserDetail = async(req,res,next)=>{
     console.log(req.user.email);
 
@@ -65,10 +68,12 @@ export const apiUserDetail = async(req,res,next)=>{
     }
 }
 
+/*안쓰는 로직 */
 export const userModify = (req,res)=>{
     res.render("userModify");
 }
 
+/*안쓰는 로직 */
 export const apiUserModify = async(req,res,next)=>{
 
     const nickname= req.body.nickname;
@@ -105,6 +110,7 @@ export const apiUserModify = async(req,res,next)=>{
      }
 }
 
+/*안쓰는 로직*/
 export const apiUserDelete = async(req,res,next)=>{
     console.log("없애자...");
     

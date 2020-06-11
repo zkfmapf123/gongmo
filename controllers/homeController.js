@@ -31,7 +31,9 @@ export const home = async(req,res,next)=>{
         deletePoster(posts3);
 
         //최근만들어진거 5~10개정도
-        if(posts) res.render("home",{posts, posts2});
+        if(posts) res.set({
+            "Cache-Control" : "no-cache"
+        }).render("home",{posts, posts2});
         else res.render("home",{posts:[], posts2:[]});
 
     }catch(error){
@@ -42,7 +44,9 @@ export const home = async(req,res,next)=>{
 
 /*      login        */
 export const login = (req,res)=>{
-    res.render("login");
+    res.set({
+        "Cache-Control" : "no-cache, no-store, must-revalidate"
+    }).render("login");
 }
 
 export const logout = (req,res)=>{
@@ -53,7 +57,9 @@ export const logout = (req,res)=>{
 
 /*             join             */
 export const join = (req,res)=>{
-    res.render("join");
+    res.set({
+        "Cache-Control" : "no-cache, no-store, must-revalidate"
+    }).render("join");
 }
 
 export const postJoin = async(req,res,next)=>{
@@ -95,7 +101,9 @@ export const postJoin = async(req,res,next)=>{
 };
 
 export const find = (req,res) =>{
-    res.render("find");
+    res.set({
+        "Cache-Control" : "no-cache, no-store, must-revalidate"
+    }).render("find");
 };
 
 export const postFind= async(req,res)=>{
@@ -153,13 +161,14 @@ export const apiFind = async(req,res,next) =>{
                 where : {
                     email : email}
             })
-        res.status(200).json("성공");
+            r.status(200).json("성공");
     }catch(error){
         console.error(error);
         next();
     };
 };
 
+//안쓰는...
 export const apiAdvertisement = async(req,res,next)=>{
     try{
         fs.readdir("poster",(err,files)=>{

@@ -1,9 +1,10 @@
 import { Seeboard, SeeboardComments, User } from "../models";
 import routers from "../ROUTERS";
-import { getTime } from "./viewController";
 
 export const board = (req,res) =>{
-    res.render("board");
+    res.set({
+        "Cache-Control" : "no-cache, no-store, must-revalidate"
+    }).render("board");
 }
 
 export const postBoard = async(req,res,next)=>{
@@ -47,9 +48,14 @@ export const boardDetail = async(req,res,next)=>{
 
         //시간 String
         //getTime() 이용해서 시간구하자
+        const time = boardDetailTimeCalculator(board.createdAt.toString());
+
         
-        res.render("boardDetail",{
+        res.set({
+            "Cache-Control" : "public, max-age=36000"
+        }).render("boardDetail",{
             board,
+            time,
             flag : flag,
             flag2 : flag2,
         });
@@ -63,7 +69,9 @@ export const boardDetail = async(req,res,next)=>{
 export const boardCreate = (req,res)=>{
     const userNickName = req.user.nickName;
     
-    res.render("boardCreate",{
+    res.set({
+        "Cache-Control" : "public, max-age=36000"
+    }).render("boardCreate",{
         userNickName : userNickName
     });
 }
@@ -101,7 +109,9 @@ export const boardUpdate = async(req,res)=>{
         });
 
         if(board){
-            res.render("boardUpdate",{
+            res.set({
+                "Cache-Control" : "public, max-age=36000"
+            }).render("boardUpdate",{
                 board
             });
         }
@@ -137,6 +147,19 @@ export const boardDelete = async(req,res,next)=>{
     const boardId = req.params.id;
 
     try{
+        const seeboardId = await Seeboard.findOne({
+            attribute:["id"],
+            where:{
+                id : boardId
+            }
+        });
+
+        await SeeboardComments.destroy({
+            where:{
+                seeboardId : seeboardId.id
+            }
+        });
+
         await Seeboard.destroy({
             where:{
                 id : boardId
@@ -168,7 +191,6 @@ export const apiBoardFind = async(req,res,next)=>{
 }
 
 export const apiBoardComments = async(req,res,next)=>{
-    console.log(req.body);
     const nickName = req.body.boardNickName;
     const title = req.body.boardTitle;
     //const content = req.body.boardContent.trim();
@@ -212,8 +234,6 @@ export const boardCommentsPrintAll = async(req,res,next)=>{
             }
         });
 
-        console.log(board);
-
         if(board){
             boardId = board.id;
 
@@ -244,4 +264,34 @@ export const boardCommentsPrintAll = async(req,res,next)=>{
         console.error(error);
         next();
     }
+}
+
+const boardDetailTimeCalculator = (index)=>{
+    let year;
+    let month;
+    let day;
+    let date;
+
+    let time = ((index.split("GMT"))[0]).split(" ");
+
+    year = time[3];
+    day = time[2];
+    date = time[4];
+
+    switch(time[1]){
+        case "Jan": month ="01"; break; 
+        case "Feb": month ="02"; break;
+        case "Mar": month ="03"; break;
+        case "Apr": month ="04"; break;
+        case "May": month ="05"; break;
+        case "Jun": month ="06"; break;
+        case "Jul": month ="07"; break;
+        case "Aug": month ="08"; break;
+        case "Sep": month ="09"; break;
+        case "Oct": month ="10"; break;
+        case "Nov": month ="11"; break;
+        case "Dec": month ="12"; break;
+    }
+
+    return `${year}-${month}-${day}-${date}`;
 }

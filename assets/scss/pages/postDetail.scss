@@ -1,8 +1,7 @@
 .postDeatil_container{
     min-width: 1144px;
-    .postDetail_column{
-        margin : 10px 100px 10px 100px;
-    }
+    
+    margin : 10px 100px 10px 100px;
     
     //좋아요 , 싫어요, 찜하기 등등
     .postDetail_column:nth-child(1){
@@ -12,7 +11,9 @@
     .postDetail_column:nth-child(2){
 
         display: grid;
-        grid-template-columns: repeat(2,1fr);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-top : 20px;
         padding-bottom: 20px;
         border-bottom : 1px solid black;
@@ -117,29 +118,29 @@
                 font-size : 20px;
 
                 div{
-                padding-right: 20px;
-                margin-top : 20px;
-                margin-bottom : 20px;
+                    padding-right: 20px;
+                    margin-top : 20px;
+                    margin-bottom : 20px;
 
-                    a{
-                        text-decoration: none;
-                        color : black;
+                        a{
+                            text-decoration: none;
+                            color : black;
 
-                    i{
-                        padding-right: 10px;
-                    }
-                    
-                    }
+                        i{
+                            padding-right: 10px;
 
-                    a:hover {
-                        font-size : 30px;
+                            a:hover {
+                                font-size : 30px;
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    .postDetail_column:nth-child(3)
-    {
+
+    .postDetail_column:nth-child(3){
+    
         .postText{
             margin-top: 20px;
             text-align: left;
@@ -162,10 +163,10 @@
             margin-top: 20px;
             text-align: left;
             font-size : 30px
-        }
+            }
     }
     
-    //댓글
+        //댓글
     .postDetail_column:nth-child(4){
 
         .seeboard_column:nth-child(1){

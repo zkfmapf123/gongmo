@@ -4,7 +4,9 @@ import { dayCalcuator } from "./viewController";
 export const analTotal = (req,res)=>{
     let posters = [];
 
-    res.render("analTotal",{
+    res.set({
+        "Cache-Control" : "public max-age : 300000"
+    }).render("analTotal",{
         posters
     });
 }

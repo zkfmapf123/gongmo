@@ -3,6 +3,7 @@ extends layouts/main
 block content
     .postDeatil_container#postDetail_container
         .postDetail_column
+        
         .postDetail_column
             .column
                 image(src=`${posts.imageUrl}` width= 500 height= 500)
@@ -48,13 +49,12 @@ block content
                         a(href="#seeboard") 
                             i.far.fa-comment 댓글 창 이동하기
         .postDetail_column
-                div.postText
-                    ul
-                        for item in text
-                            li= item
-                //h3.postCreateAt= `업데이트 날짜 : ${posts.createdAt}`
-                h3.postView= view
-
+            div.postText
+                ul
+                    for item in text
+                        li= item
+            //h3.postCreateAt= `업데이트 날짜 : ${posts.createdAt}`
+            h3.postView= view
         .postDetail_column
             .seeboard_column
                 if user

@@ -10,10 +10,10 @@ block content
                     th 글쓴이
                     th 작성일자
                     th 조회 수
-
         .board_column
             a#leftClick
                 i.fas.fa-chevron-left
+            span#pageNumber 0
             a#rightClick
                 i.fas.fa-chevron-right
         .board_column
@@ -22,3 +22,208 @@ block content
                 input(type="submit" value="찾기")
             form(action=`/board/create` method="get")
                 input(type="submit" value="글 작성하기")
+
+    script.
+
+            const boardLeftClick = document.getElementById("leftClick");
+            const boardRightClick = document.getElementById("rightClick");
+            const boardFind = document.getElementById("findBoard");
+            const pageSpan = document.getElementById("pageNumber");
+
+            let board = []; //게시글 전체
+            let ADMIN_COMMENT = 0; //관리자 공지사항 글 2개
+            const ADMIN_COMMENT_COUNT = 2;
+            let PAGE_NUMBER = 0;
+
+            const VIEW_BOARD_COUNT = 13; //관리자 글 제외한 13개 글..
+            let BOARD_NUMBER = 0; // index number
+            let BOARD_ITERATION = 0; //15개씩 반복 하는 번호
+
+            let color = ["#FFC312","#C4E538","#12CBC4","#FDA7DF",
+             "#F79F1F","#A3CB38","#1289A7","#EE5A24",
+             "#009432","#0652DD","#EA2027","#1B1464"];
+
+            //시작하면 게시판화면 바로 보이게
+        const boardInteraction = () =>{
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = () =>{
+                if(xhr.status === 200){
+                    board = JSON.parse(xhr.responseText);
+                    board.sort((a,b)=>{
+                        return b.id - a.id
+                    });
+                    tableBoarding(board);
+
+                }else{
+                    console.log(Xhr.responseText);
+                }
+            }
+
+            xhr.open("post","/board");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send();
+        }
+
+        //게시판 화면 한 페이지 당 20개씩 
+        const tableBoarding = (board) =>{
+
+            const table = document.getElementById("table");
+    
+            //10개씩
+            while(true){
+                if(ADMIN_COMMENT < ADMIN_COMMENT_COUNT){
+                    ADMIN_COMMENT++;
+                    BOARD_NUMBER = board.length - ADMIN_COMMENT;
+                }else{
+                    if(ADMIN_COMMENT === ADMIN_COMMENT_COUNT){
+                        BOARD_NUMBER = (PAGE_NUMBER * VIEW_BOARD_COUNT);
+                        ADMIN_COMMENT++;
+                    }
+                }
+                //console.log(BOARD_NUMBER);
+                let COLOR_RANDOM_NUMBER = Math.floor(Math.random() * color.length);
+                let time = board[BOARD_NUMBER].createdAt.split("T");
+                BOARD_ITERATION++;
+                let tr = document.createElement("tr");
+                let td = document.createElement("td");
+                let a = document.createElement("a");
+                let span = document.createElement("span");
+                let div = document.createElement("div");
+
+                a.textContent= BOARD_ITERATION;
+                td.appendChild(a);
+                tr.appendChild(td);
+
+                a =document.createElement("a");
+                td=document.createElement("td");
+                a.setAttribute("href",`/board/${board[BOARD_NUMBER].id}`);
+                a.textContent = board[BOARD_NUMBER].title;
+                span.textContent = board[BOARD_NUMBER].separate;
+                span.setAttribute("style",`color:${color[COLOR_RANDOM_NUMBER]}`);
+                div.appendChild(span);
+                div.appendChild(a);
+
+                //오늘날짜 게시글 New 표시
+                if(today(time[0])){
+                    span = document.createElement("span");
+                    span.textContent = "New"
+                    a.appendChild(span);
+                }
+
+                td.appendChild(div);
+                tr.appendChild(td);
+
+                a =document.createElement("a");
+                td= document.createElement("td");
+                a.textContent = board[BOARD_NUMBER].userNickName;
+                td.appendChild(a);
+                tr.appendChild(td);
+
+                a=document.createElement("a");
+                td=document.createElement("td");
+                a.textContent = time[0];
+                td.appendChild(a);
+                tr.appendChild(td);
+
+                a= document.createElement("a");
+                td= document.createElement("td");
+                a.textContent = board[BOARD_NUMBER].view;
+                td.appendChild(a);
+                tr.appendChild(td);
+
+                table.appendChild(tr);
+                BOARD_NUMBER++;
+
+                if(BOARD_NUMBER === board.length-ADMIN_COMMENT_COUNT || BOARD_ITERATION === 15){
+                    ADMIN_COMMENT = 0;
+                    BOARD_ITERATION =0;
+                    break;
+                }
+            }
+        }
+
+        //뒤로
+        boardLeftClick.addEventListener("click",(e)=>{
+            if(PAGE_NUMBER === 0){
+                alert("처음 페이지 입니다.");
+            }else{
+                removeBording();
+                PAGE_NUMBER--;
+                pageSpan.innerText = PAGE_NUMBER;
+                tableBoarding(board);
+            }
+        });
+
+        //앞으로
+        boardRightClick.addEventListener("click",(e)=>{
+            if(BOARD_NUMBER >= board.length-ADMIN_COMMENT_COUNT){
+                alert("마지막 페이지 입니다.");
+            }else{
+                removeBording();
+                PAGE_NUMBER++;
+                pageSpan.innerText = PAGE_NUMBER;
+                tableBoarding(board);
+            }
+        });
+
+        //검색 추출
+        boardFind.addEventListener("submit",(e)=>{
+            e.preventDefault();
+
+            const findNickName = boardFind.firstChild.value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.onload = () =>{
+                if(xhr.status===200){
+                    BOARD_NUMBER=0;
+                    board = JSON.parse(xhr.responseText);
+
+                    if(board.length < 1){
+                        alert("검색 결과가 없습니다.");
+                    }else{
+                        //지우는 로직
+                        removeBording();                
+                        tableBoarding(board); //검색 값
+                    }
+                }else{
+                    console.error(error);
+                }
+            }
+
+            xhr.open("post","/board/find");
+            xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(JSON.stringify({
+                findName : findNickName
+            }));
+        })
+
+        //검색 초기화
+        const removeBording = () =>{
+            const table = document.getElementById("table");
+            const tableNode = table.children;
+            const tableNodeLength = tableNode.length;
+
+            for(let k=1; k<tableNodeLength; k++){
+                table.removeChild(tableNode[1]);
+            }
+        }
+
+        //날짜 구하기 N
+        const today = (time) =>{
+
+            let ttoday = new Date();
+            let year = ttoday.getFullYear();
+            let month = ttoday.getMonth()+1;
+            let date = ttoday.getDate();
+
+            if(month <10) month = `0${month}`;
+            if(date <10) date = `0${date}`;
+    
+            let todayTime = `${year}-${month}-${date}`;
+
+            if(time === todayTime) return true;
+            else return false;
+        }
+
+        boardInteraction();

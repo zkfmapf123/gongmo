@@ -5,6 +5,12 @@ import fs from "fs";
 import axios from "axios";
 import { Poster } from "./models";
 
+//  1: 공모전
+//  2: 봉사활동 취업으로할까...
+//  3: 대외활동
+//  4: 기타..
+const SEPARATE_NUM = 4;
+
 if(fs.readFileSync('csv/result.csv')){
     fs.unlink(`csv/result.csv`,(err)=>{
         if(err) throw err;
@@ -132,18 +138,10 @@ const saveDatabase = async () => {
             const postText = dbs[i][7].replace(/^\s+|\s+$/g, '');
             const randomUrl = dbs[i][9];
 
-            //  1: 공모전
-            //  2: 봉사활동 취업으로할까...
-            //  3: 대외활동
-            //  4: 기타..
-
-            //test용
-            //const randomNum = Math.floor(Math.random() * (3-0+1) + 1);
-            const randomNum = 2;
             //db에 넣기
             await Poster.create({
                 title: postTitle,
-                divide: randomNum,
+                divide: SEPARATE_NUM,
                 separate: postSeparate,
                 target : postTarget,
                 agency: postAgency,

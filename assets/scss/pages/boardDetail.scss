@@ -1,5 +1,5 @@
 .boardDetail_container{
-    min-width: 608px;
+    min-width: 890px;
     margin-top: 20px;
     margin-left: 10%;
     margin-right: 10%;
@@ -52,6 +52,7 @@
 
     // 글수정, 삭제버튼
     .boardDetail_column:nth-child(3){
+        min-width: 915px;
         margin-bottom: 20px;
 
         #commentCount{
@@ -126,7 +127,8 @@
 
                 #commentTime{
                     width: 10%;
-                    font-size: 10px;
+                    font-weight: 400;
+                    font-size: 14px;
                     text-align: end;
                 }
 

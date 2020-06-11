@@ -1,3 +1,4 @@
+
 const commentCreate = document.getElementById("commentCreate");
 const commentsResult = document.getElementById("commentsResult");
 const boardColumn = document.getElementsByClassName("boardDetail_column");
@@ -36,6 +37,7 @@ commentCreate.addEventListener("submit",(e)=>{
 
 const commentPrintAll = () =>{
 
+    console.log("view");
     const xhr = new XMLHttpRequest();
 
     xhr.onload = () =>{
@@ -80,7 +82,8 @@ const registerPrintAll = (comments)=>{
         tr.appendChild(td);
 
         td = document.createElement("td");
-        td.textContent = time[0];
+        let t = timeCalcul(time[0]);
+        td.textContent = t;
         td.setAttribute("id", "commentTime");
         tr.appendChild(td);
 
@@ -105,3 +108,27 @@ const commentsRemoveAll = (comments) =>{
 
 //댓글 보여주기
 commentPrintAll();
+
+//날짜 계산
+const timeCalcul = (time)=>{
+
+    console.log("timeCalcul");
+    let standardTime = time.split("-");
+
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
+    if(month < 10) month = `0${month}`;
+    if(date < 10) date = `0${date}`;
+
+    if(year.toString() === standardTime[0].toString()){
+        if(month.toString() === standardTime[1].toString() && date.toString() === standardTime[2].toString()) return `오늘`;
+
+        let monthDate = (month - standardTime[1]) * 30;
+        let dayDate = (date - standardTime[2]);
+        return `${monthDate + dayDate}일 전`;
+    }else{
+        return (`${year-standardTime}년 전`);
+    }
+}

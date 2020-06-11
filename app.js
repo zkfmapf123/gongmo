@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
+import hpp from "hpp";
 import bodyParse from "body-parser";
 import cookieParse from "cookie-parser";
 import dotenv from "dotenv";
@@ -12,12 +13,12 @@ import analRouter from "./routers/analRouter";
 import userRouter from "./routers/userRouter";
 import { localsMiddleware} from "./localsMiddleware";
 import { sequelize } from "./models";
-import MYSQLStore from "express-mysql-session";
 import passport from "passport";
 import passportConfig from "./passport";
 import seeboardRouter from "./routers/seeboardRouter";
 import apiRouter from "./routers/apiRouter";
 import boardRouter from "./routers/boardRouter";
+const RedisStore = require("connect-redis")(session);
 
 dotenv.config();
 const app = express();
@@ -29,8 +30,15 @@ const PORT = process.env.PORT;
 app.set("view engine","pug");
 
 //middleware
-app.use(morgan("tiny"));
-app.use(helmet());
+if(process.env.NODE_ENV === "production"){
+    console.log("배포 전용");
+    app.use(morgan("combined"));
+    app.use(helmet());
+    app.use(hpp());
+}else{
+    console.log("개발 전용");
+    app.use(morgan("dev"));
+}
 app.use("/poster",express.static("poster"));
 app.use("/advertise",express.static("advertise"));
 app.use("/assets",express.static("assets")); //이거지워야됨
@@ -38,7 +46,7 @@ app.use("/static",express.static("static"));
 app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(cookieParse());
-app.use(session({
+const sessionOption = {
     resave: false,
     saveUninitialized:false,
     secret: process.env.SECRET_STRING,
@@ -46,15 +54,49 @@ app.use(session({
         httpOnly:true,
         secure: false,
     },
-    //gongoDB에 sessio table 생성된다.
-    store: new MYSQLStore({
-        host: process.env.MYSQL_HOST,
-        port : process.env.MYSQL_PORT,
-        user : process.env.MYSQL_USER,
-        password : process.env.MYSQL_PASSWORD,
-        database : process.env.MYSQL_DATABASE
+    store: new RedisStore({
+        host: process.env.REDIS_HOST,
+        port : process.env.REDIS_PORT,
+        pass : process.env.REDIS_PASSWORD,
+        logErrors : true,
     })
-}));
+};
+if(process.env.NODE_ENV === "production"){
+    app.use(session({
+        resave : false,
+        saveUninitialized : false,
+        secret : process.env.SECRET_STRING,
+        proxy : true,
+        cookie :{
+            httpOnly : true,
+            secure : true
+        },
+    
+        store : new RedisStore({
+            host : process.env.REDIS_HOST,
+            port : process.env.REDIS_PORT,
+            pass : process.env.REDIS_PASSWORD,
+            logErrors : true
+        })
+    }));
+}else{
+    app.use(session({
+        resave : false,
+        saveUninitialized : false,
+        secret : process.env.SECRET_STRING,
+        cookie :{
+            httpOnly : true,
+            secure : false
+        },
+    
+        store : new RedisStore({
+            host : process.env.REDIS_HOST,
+            port : process.env.REDIS_PORT,
+            pass : process.env.REDIS_PASSWORD,
+            logErrors : true
+        })
+    }));
+}
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(localsMiddleware);
