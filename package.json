@@ -21,9 +21,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/node": "7.8.7",
-    "@babel/polyfill": "7.8.7",
-    "@babel/preset-env": "7.9.0",
     "autoprefixer": "9.7.6",
     "axios": "0.19.2",
     "bcrypt": "4.0.1",
@@ -62,6 +59,9 @@
   "devDependencies": {
     "@babel/cli": "7.10.1",
     "@babel/core": "7.9.0",
+    "@babel/node": "7.8.7",
+    "@babel/polyfill": "7.8.7",
+    "@babel/preset-env": "7.9.0",
     "babel-loader": "8.1.0",
     "nodemon": "2.0.2",
     "webpack": "4.42.1",
