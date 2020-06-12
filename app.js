@@ -24,7 +24,7 @@ dotenv.config();
 const app = express();
 sequelize.sync();
 passportConfig(passport);
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 //set
 app.set("view engine","pug");
