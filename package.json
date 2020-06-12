@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon --exec babel-node app.js --delay 2",
+    "dev:server": "nodemon --exec babel-node index/app.js --delay 2",
     "dev:assets": "webpack --mode development -w",
     "build:assets": "WEBPACK_ENV=production webpack",
     "data:start": "babel-node dataCrawler.js",
-    "start": "cross-env NODE_ENV=production ./node_modules/.bin/babel-node.cmd app.js"
+    "start": "cross-env NODE_ENV=production babel-node index/app.js"
   },
   "author": "",
   "license": "ISC",
