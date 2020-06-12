@@ -96,4 +96,4 @@ app.use(routers.board,boardRouter);
 app.use(routers.api,apiRouter);
 
 //init
-app.listen(PORT,()=>console.log(`http://localhost:${PORT} success`));
+app.listen(process.env.PORT || 5000,()=>console.log(`http://localhost:${PORT} success`));
