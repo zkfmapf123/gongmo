@@ -9,7 +9,7 @@ import { Poster } from "./models";
 //  2: 봉사활동 취업으로할까...
 //  3: 대외활동
 //  4: 기타..
-const SEPARATE_NUM = 4;
+const SEPARATE_NUM = 2;
 
 if(fs.readFileSync('csv/result.csv')){
     fs.unlink(`csv/result.csv`,(err)=>{
@@ -17,7 +17,7 @@ if(fs.readFileSync('csv/result.csv')){
         console.log("delete result");
     })
 }
-const csv = fs.readFileSync(`csv/data.csv`);
+const csv = fs.readFileSync(`csv/data2.csv`);
 const records = parse(csv.toString("utf-8"));
 
 const cralwer = async()=>{

@@ -7,7 +7,10 @@
     "dev:server": "nodemon --exec babel-node index/app.js --delay 2",
     "dev:assets": "webpack --mode development -w",
     "build:assets": "WEBPACK_ENV=production webpack",
-    "data:start": "babel-node dataCrawler.js",
+    "data:start1": "babel-node dataCrawler1.js",
+    "data:start2": "babel-node dataCrawler2.js",
+    "data:start3": "babel-node dataCrawler3.js",
+    "data:start4": "babel-node dataCrawler4.js",
     "start": "cross-env NODE_ENV=production babel-node ./index/app.js"
   },
   "author": "",
