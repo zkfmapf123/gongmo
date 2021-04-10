@@ -5,7 +5,7 @@
   <li><strong>Architecture</strong></li>
   <li><strong>Nodejs</strong></li>
   <li><strong>Pug</strong></li>
-  <li><strong>Ajax</string></li>
+  <li><strong>Ajax</strong></li>
   <li><strong>Puppeteer</strong></li>
   <li><strong>Production</strong></li>
 </ol>
