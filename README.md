@@ -2,9 +2,10 @@
 공모전 사이트 ( nodejs + pug + vaniliajs + ajax + puppeteer)
 
 <ol>
-  <li>architecture</li>
-  <li>nodejs</li>
-  <li>pug</li>
-  <li>puppeteer</li>
-  <li>pm2</li>
+  <li><strong>architecture</strong></li>
+  <li><strong>nodejs</strong></li>
+  <li><strong>pug</strong></li>
+  <li><strong>ajax</string></li>
+  <li><strong>puppeteer</strong></li>
+  <li><strong>pm2</strong></li>
 </ol>
