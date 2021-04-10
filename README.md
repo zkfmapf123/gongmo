@@ -3,7 +3,7 @@
 
 <ol>
   <li><strong>Architecture</strong></li>
-  <image src="![image](https://user-images.githubusercontent.com/47292546/114262885-54a8a680-9a1d-11eb-8132-67cf3de98958.png)"/>
+  <image ![image](https://user-images.githubusercontent.com/47292546/114262885-54a8a680-9a1d-11eb-8132-67cf3de98958.png)"/>
 
   <li><strong>Nodejs</strong></li>
   <li><strong>Pug</strong></li>
